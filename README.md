@@ -2,7 +2,7 @@
 
 DLR image classification은 IoT Greengrass에서 제공하는 이미지 분류 Component로서 ResNet-50 모델을 사용합니다. 
 
-"accessControl"을 보면 아래와 같이 "ml/dlr/image-classification" topic으로 IoT Core로 결과를 전송합니다. topic은 "accessControl"에서 수정할 수 있습니다. 
+"accessControl"을 보면 아래와 같이 "ml/dlr/image-classification" topic으로 IoT Core로 결과를 전송합니다. 
 
 ```java
 {
@@ -20,7 +20,13 @@ DLR image classification은 IoT Greengrass에서 제공하는 이미지 분류 C
 }
 ```
 
-- "ImageDirectory": 이미지를 읽어오는 경로입니다. 수정가능합니다. 
+## Configuration 
+
+- "PublishResultsOnTopic": Inference 결과를 전달할 topic 이름입니다. 기본값은 "ml/dlr/image-classification" 입니다. 
+
+- "Accelerator": CPU/GPU를 선택할 수 있습니다. 기본값은 cpu입니다. 
+
+- "ImageDirectory": 이미지를 읽어오는 경로입니다. 
 
 ```java
 /greengrass/v2/packages/artifacts-unarchived/component-name/image_classification/sample_images/
