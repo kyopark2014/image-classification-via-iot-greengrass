@@ -44,6 +44,35 @@ DLR image classification은 IoT Greengrass에서 제공하는 이미지 분류 C
 sudo tail -f /greengrass/v2/logs/aws.greengrass.DLRImageClassification.log
 ```
 
+## Workshop: Image Classification via Greengrass
+
+[Image Classification via Greengrass](https://catalog.us-east-1.prod.workshops.aws/workshops/5ecc2416-f956-4273-b729-d0d30556013f/en-US/chapter7-ml/10-step1)
+
+아래와 같이 라이브러리를 설치합니다.
+
+```java
+sudo apt-get install libgl1 -y
+```
+
+"aws.greengrass.DLRImageClassification"을 배포할때 또는 배포후에 아래와 같이 config를 변경합니다.
+
+```java
+{
+  "InferenceInterval": "60",
+  "ImageDirectory": "/tmp/images/",
+  "ImageName": "image.jpg"
+}
+```
+
+아래처럼 이미지를 업데이트 합니다.
+
+```java
+mkdir -p /tmp/images
+wget "https://aws-iot-workshop-artifacts.s3.eu-west-1.amazonaws.com/packages/ggworkshop/image.jpg" -O /tmp/images/image.jpg
+```
+
+이후 결과를 IoT Core에서 확인합니다. 
+
 
 ## Reference
 
