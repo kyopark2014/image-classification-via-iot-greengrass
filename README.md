@@ -64,6 +64,11 @@ sudo apt-get install libgl1 -y
 }
 ```
 
+성기의 config을 아래와 같이 "Configuration to merge"에 입력합니다. 
+
+![noname](https://user-images.githubusercontent.com/52392004/204227376-1060ff56-2960-4814-a440-0984dd013715.png)
+
+
 아래처럼 이미지를 업데이트 합니다.
 
 ```java
