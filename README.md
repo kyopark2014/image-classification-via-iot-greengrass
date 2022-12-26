@@ -80,6 +80,10 @@ wget "https://aws-iot-workshop-artifacts.s3.eu-west-1.amazonaws.com/packages/ggw
 
 이후 결과를 IoT Core에서 확인합니다. 
 
+### Greengrass Commands와 Memo
+
+유용한 [Greengrass 명령어와 중요한 메모들](https://github.com/kyopark2014/iot-greengrass/blob/main/greengrass-commands.md)를 정리하였습니다.
+
 
 ## Reference
 
