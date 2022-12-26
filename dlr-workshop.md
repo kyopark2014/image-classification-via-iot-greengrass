@@ -34,4 +34,4 @@ wget "https://aws-iot-workshop-artifacts.s3.eu-west-1.amazonaws.com/packages/ggw
 
 ## Reference 
 
-[Workshop - Image Classification via Greengrass](https://catalog.us-east-1.prod.workshops.aws/workshops/5ecc2416-f956-4273-b729-d0d30556013f/en-US/chapter7-ml/10-step1)에 따라 아래와 같이 이미지에 대한 분류를 수행할 수 있습니다. 
+[Workshop - Image Classification via Greengrass](https://catalog.us-east-1.prod.workshops.aws/workshops/5ecc2416-f956-4273-b729-d0d30556013f/en-US/chapter7-ml/10-step1)
