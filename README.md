@@ -1,5 +1,7 @@
 # DLR Image Classification
 
+Greengrass에서 Built-in Component를 이용하여 이미지 분류를 수행합니다. 
+
 DLR image classification은 IoT Greengrass에서 제공하는 이미지 분류 Component로서 ResNet-50 모델을 사용합니다. 
 
 "accessControl"을 보면 아래와 같이 "ml/dlr/image-classification" topic으로 IoT Core로 결과를 전송합니다. 
