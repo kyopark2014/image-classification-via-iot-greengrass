@@ -17,7 +17,7 @@ MAX_NO_OF_RESULTS = 5
 SHAPE = (224, 224)
 
 # Read synset file
-MODEL_DIR = './model'
+MODEL_DIR = '/Users/ksdyb/Documents/src/ml/iot-greengrass-DLR-image-classification/dlr-inference/model'
 LABELS = path.join(MODEL_DIR, "synset.txt")
 with open(LABELS, "r") as f:
     synset = literal_eval(f.read())
