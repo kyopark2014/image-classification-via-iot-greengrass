@@ -15,6 +15,13 @@
 sudo apt-get install libgl1 -y
 ```
 
+아래처럼 사용할 이미지를 다운로드합니다.
+
+```java
+mkdir -p /tmp/images
+wget "https://aws-iot-workshop-artifacts.s3.eu-west-1.amazonaws.com/packages/ggworkshop/image.jpg" -O /tmp/images/image.jpg
+```
+
 [Public Component Console](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/greengrass/v2/components/public)에서 아래와 같이 "aws.greengrass.DLRImageClassification"을 선택합니다. 
 
 ![noname](https://user-images.githubusercontent.com/52392004/209589629-22d65571-da82-461d-81bf-ed2e5ed5d8fc.png)
@@ -171,14 +178,7 @@ Component Name: aws.greengrass.DLRImageClassification
     Configuration: {"accessControl":{"aws.greengrass.ipc.mqttproxy":{"aws.greengrass.DLRImageClassification:mqttproxy:1":{"operations":["aws.greengrass#PublishToIoTCore"],"policyDescription":"Allows access to publish via topic ml/dlr/image-classification.","resources":["ml/dlr/image-classification"]}}},"ImageDirectory":"/tmp/images/","ImageName":"image.jpg","InferenceInterval":"60","ModelResourceKey":{"aarch64":"DLR-resnet50-aarch64-cpu-ImageClassification","armv7l":"DLR-resnet50-armv7l-cpu-ImageClassification","windows":"DLR-resnet50-win-cpu-ImageClassification","x86_64":"DLR-resnet50-x86_64-cpu-ImageClassification"},"PublishResultsOnTopic":"ml/dlr/image-classification"}
 ```
 
-## 이미지 업데이트 
 
-아래처럼 이미지를 업데이트 합니다.
-
-```java
-mkdir -p /tmp/images
-wget "https://aws-iot-workshop-artifacts.s3.eu-west-1.amazonaws.com/packages/ggworkshop/image.jpg" -O /tmp/images/image.jpg
-```
 
 이후 결과를 IoT Core에서 확인합니다. 
 
