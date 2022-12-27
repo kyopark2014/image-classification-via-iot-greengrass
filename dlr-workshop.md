@@ -19,7 +19,6 @@ sudo apt-get install libgl1 -y
 
 아래처럼 사용할 이미지를 다운로드합니다.
 
-- workshop s3에서 다운로드하는 경우
 ```java
 mkdir -p /tmp/images
 wget "https://aws-iot-workshop-artifacts.s3.eu-west-1.amazonaws.com/packages/ggworkshop/image.jpg" -O /tmp/images/image.jpg
@@ -27,7 +26,6 @@ wget "https://aws-iot-workshop-artifacts.s3.eu-west-1.amazonaws.com/packages/ggw
 
 아래처럼 github에서도 다운로드 가능합니다. 
 
-- wget으로 다운로드 하는 경우
 ```java
 mkdir -p /tmp/images
 wget https://raw.githubusercontent.com/kyopark2014/iot-greengrass-DLR-image-classification/main/image.jpg -O /tmp/images/image.jpg
