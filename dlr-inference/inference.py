@@ -74,14 +74,14 @@ def predict_from_image(image_data):
 
 def main():
     image = load_image(path.join(IMAGE_DIR, 'cat.jpeg'))
-    cvimage = resize(image, SHAPE)
+#    cvimage = resize(image, SHAPE)
 
-    if cvimage is not None:
-        predict_from_image(cvimage)
-        return
-    else:
-        logger.error("Unable to capture an image using camera")
-        exit(1)
+#    if cvimage is not None:
+#        predict_from_image(cvimage)
+#        return
+#    else:
+#        logger.error("Unable to capture an image using camera")
+#        exit(1)
 
 if __name__ == '__main__':
     main()
