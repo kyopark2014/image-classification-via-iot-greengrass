@@ -120,7 +120,7 @@ wget https://raw.githubusercontent.com/kyopark2014/iot-greengrass-DLR-image-clas
 
 오른쪽의 [Deploy]를 선택한후 [Create new deployment]를 선택합니다.
 
-아래처럼,[Deployment target]에서 Greegrass device의 정보를 아래처럼 입력합니다. 이후 [Next]를 선택합니다.
+아래처럼 [Deployment target]에서 Greegrass device의 정보를 아래처럼 입력합니다. 이후 [Next]를 선택합니다.
 
 ![noname](https://user-images.githubusercontent.com/52392004/209589891-c2e4d67f-367c-4b86-8aeb-ea39a1c5f14f.png)
 
