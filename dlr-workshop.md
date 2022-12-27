@@ -17,7 +17,7 @@
 sudo apt-get install libgl1 -y
 ```
 
-아래처럼 사용할 이미지를 다운로드합니다.
+아래처럼 사용할 이미지를 다운로드하여 "/tmp/images/"에 저장합니다.
 
 ```java
 mkdir -p /tmp/images
