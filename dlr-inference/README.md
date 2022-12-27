@@ -6,6 +6,7 @@ DLR(Deep Learning Runtime) 이미지 분류 모델은 ResNet-50 모델을 Greeng
 ## 라이브러리 설치
 
 ```java
+pip3 install --upgrade pip
 pip3 install dlr gluoncv
 ```
 
