@@ -200,9 +200,7 @@ $ sudo cat aws.greengrass.DLRImageClassification.log
 2022-12-27T00:38:48.442Z [INFO] (Copier) aws.greengrass.DLRImageClassification: stdout. Publishing results to the IoT core.... {scriptName=services.aws.greengrass.DLRImageClassification.lifecycle.run.script, serviceName=aws.greengrass.DLRImageClassification, currentState=RUNNING}
 ```
 
-이후 결과를 IoT Core에서 확인합니다. 
-
-[MQTT test client](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/test)
+이후 결과를 [MQTT test client](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/test)에서 확인합니다. 
 
 이때의 결과는 아래와 같습니다.
 
