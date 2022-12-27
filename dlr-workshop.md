@@ -131,13 +131,15 @@ wget "https://aws-iot-workshop-artifacts.s3.eu-west-1.amazonaws.com/packages/ggw
 
 마찬가지로, "aws.greengrass.Cli"을 설치합니다. 
 
+## 결과확인
+
 아래와 같이 Greengrass 디바이스에서 greengrass-cli을 이용하여, "aws.greengrass.DLRImageClassification"가 실행되고 있는지 확인합니다. 이때 "variant.DLR.ImageClassification.ModelStore" 등도 같이 설치됨을 알 수 있습니다. 
 
 ```java
 $ sudo /greengrass/v2/bin/greengrass-cli component list
-Dec 27, 2022 12:29:43 AM software.amazon.awssdk.eventstreamrpc.EventStreamRPCConnection$1 onConnectionSetup
+Dec 27, 2022 12:39:53 AM software.amazon.awssdk.eventstreamrpc.EventStreamRPCConnection$1 onConnectionSetup
 INFO: Socket connection /greengrass/v2/ipc.socket:8033 to server result [AWS_ERROR_SUCCESS]
-Dec 27, 2022 12:29:44 AM software.amazon.awssdk.eventstreamrpc.EventStreamRPCConnection$1 onProtocolMessage
+Dec 27, 2022 12:39:53 AM software.amazon.awssdk.eventstreamrpc.EventStreamRPCConnection$1 onProtocolMessage
 INFO: Connection established with event stream RPC server
 Components currently running in Greengrass:
 Component Name: DeploymentService
@@ -148,39 +150,53 @@ Component Name: aws.greengrass.Nucleus
     Version: 2.9.2
     State: FINISHED
     Configuration: {"awsRegion":"ap-northeast-2","componentStoreMaxSizeBytes":"10000000000","deploymentPollingFrequencySeconds":"15","envStage":"prod","fleetStatus":{"periodicStatusPublishIntervalSeconds":86400.0},"greengrassDataPlaneEndpoint":"","greengrassDataPlanePort":"8443","httpClient":{},"iotCredEndpoint":"c198kakbg1m4dh.credentials.iot.ap-northeast-2.amazonaws.com","iotDataEndpoint":"anr3wll34rul5-ats.iot.ap-northeast-2.amazonaws.com","iotRoleAlias":"GreengrassV2TokenExchangeRoleAlias","jvmOptions":"-Dlog.store=FILE","logging":{},"mqtt":{"spooler":{}},"networkProxy":{"proxy":{}},"platformOverride":{},"runWithDefault":{"posixShell":"sh","posixUser":"ggc_user:ggc_group"},"telemetry":{}}
-Component Name: variant.DLR
-    Version: 1.6.11
-    State: FINISHED
-    Configuration: {"MLRootPath":"../variant.DLR/greengrass_ml","UseInstaller":"true","WindowsMLRootPath":"%cd%\\..\\variant.DLR\\greengrass_ml"}
 Component Name: variant.DLR.ImageClassification.ModelStore
     Version: 2.1.9
     State: FINISHED
     Configuration: {}
-Component Name: TelemetryAgent
+Component Name: aws.greengrass.Cli
+    Version: 2.9.2
+    State: RUNNING
+    Configuration: {"AuthorizedPosixGroups":null,"AuthorizedWindowsGroups":null}
+Component Name: FleetStatusService
     Version: 0.0.0
     State: RUNNING
     Configuration: null
-Component Name: FleetStatusService
-    Version: null
+Component Name: TelemetryAgent
+    Version: 0.0.0
     State: RUNNING
     Configuration: null
 Component Name: UpdateSystemPolicyService
     Version: 0.0.0
     State: RUNNING
     Configuration: null
-Component Name: aws.greengrass.Cli
-    Version: 2.9.2
-    State: RUNNING
-    Configuration: {"AuthorizedPosixGroups":null,"AuthorizedWindowsGroups":null}
+Component Name: variant.DLR
+    Version: 1.6.11
+    State: FINISHED
+    Configuration: {"MLRootPath":"../variant.DLR/greengrass_ml","UseInstaller":"true","WindowsMLRootPath":"%cd%\\..\\variant.DLR\\greengrass_ml"}
 Component Name: aws.greengrass.DLRImageClassification
     Version: 2.1.10
-    State: BROKEN
+    State: RUNNING
     Configuration: {"accessControl":{"aws.greengrass.ipc.mqttproxy":{"aws.greengrass.DLRImageClassification:mqttproxy:1":{"operations":["aws.greengrass#PublishToIoTCore"],"policyDescription":"Allows access to publish via topic ml/dlr/image-classification.","resources":["ml/dlr/image-classification"]}}},"ImageDirectory":"/tmp/images/","ImageName":"image.jpg","InferenceInterval":"60","ModelResourceKey":{"aarch64":"DLR-resnet50-aarch64-cpu-ImageClassification","armv7l":"DLR-resnet50-armv7l-cpu-ImageClassification","windows":"DLR-resnet50-win-cpu-ImageClassification","x86_64":"DLR-resnet50-x86_64-cpu-ImageClassification"},"PublishResultsOnTopic":"ml/dlr/image-classification"}
 ```
 
+아래 명령어로 로그로 동작상태를 확인할 수 있습니다. 
 
+```java
+$ sudo cat aws.greengrass.DLRImageClassification.log
+2022-12-27T00:38:48.026Z [INFO] (Copier) aws.greengrass.DLRImageClassification: stdout. Using default camera: false. {scriptName=services.aws.greengrass.DLRImageClassification.lifecycle.run.script, serviceName=aws.greengrass.DLRImageClassification, currentState=RUNNING}
+2022-12-27T00:38:48.442Z [INFO] (Copier) aws.greengrass.DLRImageClassification: stdout. {"timestamp": "2022-12-27 00:38:48.033218", "inference-type": "image-classification", "inference-description": "Top 5 predictions with score 0.3 or above ", "inference-results": [{"Label": "macaw", "Score": "9.598218"}, {"Label": "lorikeet", "Score": "6.3572783"}, {"Label": "black stork, Ciconia nigra", "Score": "4.962772"}, {"Label": "peacock", "Score": "4.6445074"}, {"Label": "jacamar", "Score": "4.5817575"}]}. {scriptName=services.aws.greengrass.DLRImageClassification.lifecycle.run.script, serviceName=aws.greengrass.DLRImageClassification, currentState=RUNNING}
+2022-12-27T00:38:48.442Z [INFO] (Copier) aws.greengrass.DLRImageClassification: stdout. Publishing results to the IoT core.... {scriptName=services.aws.greengrass.DLRImageClassification.lifecycle.run.script, serviceName=aws.greengrass.DLRImageClassification, currentState=RUNNING}
+```
 
 이후 결과를 IoT Core에서 확인합니다. 
+
+[MQTT test client](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/test)
+
+이때의 결과는 아래와 같습니다.
+
+![image](https://user-images.githubusercontent.com/52392004/209591221-ee50e442-cc81-4fc3-b101-031b7ef0a860.png)
+
 
 ## Reference 
 
