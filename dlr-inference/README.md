@@ -9,7 +9,9 @@ DLR(Deep Learning Runtime) 이미지 분류 모델은 ResNet-50 모델을 Greeng
 pip3 install dlr 
 
 pip3 install --upgrade pip
-pip3 install scikit-build cmake
+pip3 install scikit-build 
+pip install cmake
+pip install pillow
 pip3 install gluoncv
 ```
 
