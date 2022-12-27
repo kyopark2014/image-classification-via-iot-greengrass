@@ -11,8 +11,7 @@
 
 [Public Component Console](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/greengrass/v2/components/public)에서 아래와 같이 "aws.greengrass.DLRImageClassification"을 선택합니다. 
 
-![architecture](https://user-images.githubusercontent.com/52392004/209589612-430347fe-6d81-4e9a-a504-d18fcf55791d.png)
-
+![noname](https://user-images.githubusercontent.com/52392004/209589629-22d65571-da82-461d-81bf-ed2e5ed5d8fc.png)
 
 
 아래와 같이 라이브러리를 설치합니다.
