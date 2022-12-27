@@ -9,6 +9,12 @@
 
 ## DLRImageClassification Component 설치하기 
 
+아래와 같이 먼저 필요한 라이브러리를 Greengrass 디바이스에서 설치합니다.
+
+```java
+sudo apt-get install libgl1 -y
+```
+
 [Public Component Console](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/greengrass/v2/components/public)에서 아래와 같이 "aws.greengrass.DLRImageClassification"을 선택합니다. 
 
 ![noname](https://user-images.githubusercontent.com/52392004/209589629-22d65571-da82-461d-81bf-ed2e5ed5d8fc.png)
@@ -96,21 +102,17 @@
 
 오른쪽의 [Deploy]를 선택한후 [Create new deployment]를 선택합니다.
 
-아래처럼,[Deployment target]에서 Greegrass device의 정보를 아래처럼 입력합니다. 이후 [Next]를 선택하여 deploy 합니다. 
+아래처럼,[Deployment target]에서 Greegrass device의 정보를 아래처럼 입력합니다. 이후 [Next]를 선택합니다.
 
 ![noname](https://user-images.githubusercontent.com/52392004/209589891-c2e4d67f-367c-4b86-8aeb-ea39a1c5f14f.png)
 
+"aws.greengrass.DLRImageClassification"를 선택후, [Configuration component]를 선택합니다.
 
+![noname](https://user-images.githubusercontent.com/52392004/209590283-5072ccd6-f89d-422d-956b-aa15dbcddeb4.png)
 
+"Configuration to merge"에 아래와 같은 값을 입력하고, 아래로 스크롤하여 [Confirm]을 선택합니다. 
 
-
-아래와 같이 라이브러리를 설치합니다.
-
-```java
-sudo apt-get install libgl1 -y
-```
-
-"aws.greengrass.DLRImageClassification"을 배포할때 또는 배포후에 아래와 같이 config를 변경합니다.
+![noname](https://user-images.githubusercontent.com/52392004/204227376-1060ff56-2960-4814-a440-0984dd013715.png)
 
 ```java
 {
@@ -120,9 +122,11 @@ sudo apt-get install libgl1 -y
 }
 ```
 
-성기의 config을 아래와 같이 "Configuration to merge"에 입력합니다. 
+마찬가지로, "aws.greengrass.Cli"을 설치합니다. 
 
-![noname](https://user-images.githubusercontent.com/52392004/204227376-1060ff56-2960-4814-a440-0984dd013715.png)
+
+
+
 
 
 아래처럼 이미지를 업데이트 합니다.
