@@ -2,6 +2,14 @@
 
 DLR(Deep Learning Runtime) 이미지 분류 모델은 ResNet-50 모델을 Greengrass의 Artifact로 제공하는 머신러닝 모델입니다. 
 
+
+## 라이브러리 설치
+
+```java
+pip3 install dlr gluoncv
+```
+
+
 ## DLR 
 
 [DLR Usage](https://github.com/neo-ai/neo-ai-dlr#usage)는 아래와 같습니다. 
@@ -21,11 +29,6 @@ x = np.random.rand(1, 3, 224, 224)
 y = model.run(x)
 ```
 
-## DLR 설치
-
-```java
-pip install dlr
-```
 
 ## Reference 
 
