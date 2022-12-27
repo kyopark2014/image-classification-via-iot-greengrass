@@ -65,3 +65,5 @@ sudo tail -f /greengrass/v2/logs/aws.greengrass.DLRImageClassification.log
 
 
 [DLR: Compact Runtime for Machine Learning Models](https://neo-ai-dlr.readthedocs.io/en/latest/index.html)
+
+[End-to-end AIoT w/ SageMaker and Greengrass 2.0 on NVIDIA Jetson Nano](https://github.com/daekeun-ml/aiot-e2e-sagemaker-greengrass-v2-nvidia-jetson)
