@@ -7,9 +7,9 @@ from os import environ, path
 from ast import literal_eval
 
 logger = getLogger()
-handler = StreamHandler(stdout)
-logger.setLevel(INFO)
-logger.addHandler(handler)
+#handler = StreamHandler(stdout)
+#logger.setLevel(INFO)
+#logger.addHandler(handler)
 
 IMAGE_DIR = './images'
 SCORE_THRESHOLD = 0.3
