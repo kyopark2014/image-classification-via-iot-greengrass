@@ -41,4 +41,3 @@ y = model.run(x)
 ## Reference 
 
 [Github: neo-ai-dlr](https://github.com/neo-ai/neo-ai-dlr)
-
