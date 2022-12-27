@@ -9,6 +9,8 @@
 
 ## DLRImageClassification Component 설치하기 
 
+### 사전준비
+
 아래와 같이 먼저 필요한 라이브러리를 Greengrass 디바이스에서 설치합니다.
 
 ```java
@@ -17,10 +19,21 @@ sudo apt-get install libgl1 -y
 
 아래처럼 사용할 이미지를 다운로드합니다.
 
+- workshop s3에서 다운로드하는 경우
 ```java
 mkdir -p /tmp/images
 wget "https://aws-iot-workshop-artifacts.s3.eu-west-1.amazonaws.com/packages/ggworkshop/image.jpg" -O /tmp/images/image.jpg
 ```
+
+아래처럼 github에서도 다운로드 가능합니다. 
+
+- wget으로 다운로드 하는 경우
+```java
+mkdir -p /tmp/images
+wget https://raw.githubusercontent.com/kyopark2014/iot-greengrass-DLR-image-classification/main/image.jpg -O /tmp/images/image.jpg
+```
+
+#### Component 설치 
 
 [Public Component Console](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/greengrass/v2/components/public)에서 아래와 같이 "aws.greengrass.DLRImageClassification"을 선택합니다. 
 
