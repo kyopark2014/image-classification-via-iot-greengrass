@@ -19,10 +19,10 @@ SHAPE = (224, 224)
 # Read synset file
 MODEL_DIR = './model'
 LABELS = path.join(MODEL_DIR, "synset.txt")
-with open(LABELS, "r") as f:
-    synset = literal_eval(f.read())
+#with open(LABELS, "r") as f:
+#    synset = literal_eval(f.read())
 
-dlr_model = DLRModel(MODEL_DIR, 'cpu')
+#dlr_model = DLRModel(MODEL_DIR, 'cpu')
 
 def load_image(image_path):
     # Case insenstive check of the image type.
