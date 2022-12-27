@@ -10,8 +10,7 @@ pip3 install dlr
 
 pip3 install --upgrade pip
 pip3 install scikit-build 
-pip install cmake
-pip install pillow
+python3 -m pip install cmake pillow
 pip3 install wheel
 pip3 install gluoncv
 ```
