@@ -7,9 +7,9 @@ from os import environ, path
 from ast import literal_eval
 
 logger = getLogger()
-#handler = StreamHandler(stdout)
-#logger.setLevel(INFO)
-#logger.addHandler(handler)
+handler = StreamHandler(stdout)
+logger.setLevel(INFO)
+logger.addHandler(handler)
 
 IMAGE_DIR = './images'
 SCORE_THRESHOLD = 0.3
@@ -19,10 +19,10 @@ SHAPE = (224, 224)
 # Read synset file
 MODEL_DIR = './model'
 LABELS = path.join(MODEL_DIR, "synset.txt")
-#with open(LABELS, "r") as f:
-#    synset = literal_eval(f.read())
+with open(LABELS, "r") as f:
+    synset = literal_eval(f.read())
 
-#dlr_model = DLRModel(MODEL_DIR, 'cpu')
+dlr_model = DLRModel(MODEL_DIR, 'cpu')
 
 def load_image(image_path):
     # Case insenstive check of the image type.
@@ -74,14 +74,14 @@ def predict_from_image(image_data):
 
 def main():
     image = load_image(path.join(IMAGE_DIR, 'cat.jpeg'))
-#    cvimage = resize(image, SHAPE)
+    cvimage = resize(image, SHAPE)
 
-#    if cvimage is not None:
-#        predict_from_image(cvimage)
-#        return
-#    else:
-#        logger.error("Unable to capture an image using camera")
-#        exit(1)
+    if cvimage is not None:
+        predict_from_image(cvimage)
+        return
+    else:
+        logger.error("Unable to capture an image using camera")
+        exit(1)
 
 if __name__ == '__main__':
     main()
