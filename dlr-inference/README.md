@@ -12,6 +12,7 @@ pip3 install --upgrade pip
 pip3 install scikit-build 
 pip install cmake
 pip install pillow
+pip3 install wheel
 pip3 install gluoncv
 ```
 
