@@ -21,6 +21,12 @@ x = np.random.rand(1, 3, 224, 224)
 y = model.run(x)
 ```
 
+## DLR 설치
+
+```java
+pip install dlr
+```
+
 ## Reference 
 
 [Github: neo-ai-dlr](https://github.com/neo-ai/neo-ai-dlr)
