@@ -13,12 +13,15 @@ pip3 install scikit-build wheel
 
 pip3 install --upgrade pip
 python3 -m pip install cmake pillow
-pip3 install gluoncv
 
 pip3 install opencv-python
 
 pip install dlr 
 pip3 install dlr 
+
+
+#pip3 install gluoncv
+
 ```
 
 ## 실행 
