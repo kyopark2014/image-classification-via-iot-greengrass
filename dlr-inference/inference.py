@@ -7,6 +7,10 @@ from os import environ, path
 from ast import literal_eval
 import os
 
+from dlr
+from dlr.counter.phone_home import PhoneHome                             
+PhoneHome.disable_feature()    
+    
 logger = getLogger()
 handler = StreamHandler(stdout)
 logger.setLevel(INFO)
