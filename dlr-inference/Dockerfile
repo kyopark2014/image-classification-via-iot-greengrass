@@ -13,6 +13,7 @@ RUN pip3 install --upgrade pip
 RUN python3 -m pip install cmake pillow
 RUN pip3 install wheel
 RUN pip3 install gluoncv
+RUN pip3 install opencv-python
 
 WORKDIR /var/task/dlr
 
