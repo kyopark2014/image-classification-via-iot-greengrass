@@ -7,7 +7,7 @@ from os import environ, path
 from ast import literal_eval
 import os
 
-from dlr
+import dlr
 from dlr.counter.phone_home import PhoneHome                             
 PhoneHome.disable_feature()    
     
