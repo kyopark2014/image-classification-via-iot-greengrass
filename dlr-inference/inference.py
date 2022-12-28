@@ -33,7 +33,7 @@ with open(LABELS, "r") as f:
 
 def load_model(model_dir):
     #model = DLRModel(model_dir, 'cpu')
-    model = DLRModel(model_dir, dev_type='gpu', use_default_dlr=False)
+    model = DLRModel(model_dir, dev_type='cpu', use_default_dlr=False)
     print('MODEL was loaded')
     return model
 
