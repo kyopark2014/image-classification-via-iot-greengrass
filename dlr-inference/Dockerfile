@@ -6,6 +6,7 @@ RUN /var/lang/bin/python3.8 -m pip install scikit-learn
 RUN /var/lang/bin/python3.8 -m pip install awsiotsdk pandas
 
 #RUN sudo apt-get install libgl1 -y
+RUN apt install libgl1 -y
 RUN pip3 install dlr 
 RUN pip3 install --upgrade pip
 #RUN pip3 install scikit-build 
