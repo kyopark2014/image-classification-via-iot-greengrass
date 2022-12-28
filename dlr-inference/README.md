@@ -5,6 +5,8 @@ DLR(Deep Learning Runtime) 이미지 분류 모델은 ResNet-50 모델을 Greeng
 
 ## 라이브러리 설치
 
+아래와 같이 필요한 라이브러리를 설치합니다. 
+
 ```java
 sudo apt-get install libgl1 -y
 
