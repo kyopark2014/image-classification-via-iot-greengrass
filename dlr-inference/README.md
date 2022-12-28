@@ -15,6 +15,8 @@ pip3 install scikit-build
 python3 -m pip install cmake pillow
 pip3 install wheel
 pip3 install gluoncv
+
+pip3 install opencv-python
 ```
 
 
