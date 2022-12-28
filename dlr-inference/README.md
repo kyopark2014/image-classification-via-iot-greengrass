@@ -39,8 +39,7 @@ result: {'Label': 'plastic bag', 'Score': '4.5193176'}
 
 사용한 이미지는 아래와 같습니다.
 
-![image](https://user-images.githubusercontent.com/52392004/209852850-4f3792e8-2423-4689-83ed-3b98881616d7.png)
-
+<img src="https://user-images.githubusercontent.com/52392004/209852850-4f3792e8-2423-4689-83ed-3b98881616d7.png" width="400">
 
 ## Reference 
 
