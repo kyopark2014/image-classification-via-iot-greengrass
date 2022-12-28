@@ -14,11 +14,11 @@ pip3 install scikit-build wheel
 
 pip3 install --upgrade pip
 
-pip3 install opencv-python
 
 pip install dlr 
 pip3 install dlr 
 
+#pip3 install opencv-python
 
 #pip3 install gluoncv
 #python3 -m pip install cmake pillow
