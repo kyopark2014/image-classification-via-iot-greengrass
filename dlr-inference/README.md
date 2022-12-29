@@ -76,11 +76,7 @@ result: {'Label': 'plastic bag', 'Score': '4.5193176'}
 
 ## Container로 빌드하여 테스트하기
 
-추론을 적용할때는 Container로 배포하고자 합니다. 
-
-## Container Build 하기
-
-Container 이미지를 빌드합니다. 
+추론을 적용할때는 Container로 배포하고자 합니다. 먼저, 아래와 같이 Container 이미지를 빌드합니다. 
 
 ```java
 docker build -t dlr:v1 .
