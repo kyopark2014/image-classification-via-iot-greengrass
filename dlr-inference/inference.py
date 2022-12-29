@@ -41,7 +41,7 @@ def predict_from_image(model, image_data):
             if probabilities[i] >= SCORE_THRESHOLD:
                 result.append({"Label": str(synset[i]), "Score": str(probabilities[i])})
         
-        #logger.info("result: {}".format(result))
+        logger.debug("result: {}".format(result))
         return result
     except Exception as e:
         logger.error("Exception occured during prediction: {}".format(e))
@@ -49,7 +49,7 @@ def predict_from_image(model, image_data):
 model = load_model(MODEL_DIR)
 
 def handler(event, context):
-    #logger.info('event: %s', event)
+    logger.debug('event: %s', event)
 
     image_data = event['body']
     cvimage = resize(image_data, SHAPE)
