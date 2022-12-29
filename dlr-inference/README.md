@@ -1,4 +1,4 @@
-# DLR Inference
+# DLR을 이용한 이미지 분류 추론
 
 DLR(Deep Learning Runtime) 이미지 분류 모델은 ResNet-50 모델을 Greengrass의 Artifact로 제공하는 머신러닝 모델입니다. 
 
