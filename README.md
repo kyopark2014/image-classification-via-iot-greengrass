@@ -1,6 +1,6 @@
 # IoT 디바이스에서 머신러닝을 이용한 이미지 분류
 
-여기에서는 IoT 디바이스에서 이미지 분류를 위한 머신러닝을 수행하는것에 대해 설명하고자 합니다. IoT Greengrass의 Component를 이용하면 쉽게 IoT 디바이스를 위한 어플리케이션을 개발하고, 편리하게 배포할 수 있습니다. 관련하여 AWS에서는 Built-in Component인 [DLR image classification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)을 제공하고 있으며, [variant.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)을 이용하여 이미지 분류를 위한 머신러닝을 수행할 수 있습니다. 하지만, public component는 사용자의 목적에 따라 수정이 어려우므로, DLR image classification을 private component로 구현할 수 있다면 여러용도로 편리하게 사용할 수 있습니다. 
+여기에서는 IoT 디바이스에서 이미지 분류를 위한 머신러닝을 수행하는것에 대해 설명하고자 합니다. [IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 Component를 이용하면 쉽게 IoT 디바이스를 위한 어플리케이션을 개발하고, 편리하게 배포할 수 있습니다. 관련하여 AWS에서는 Built-in Component인 [DLR image classification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)을 제공하고 있으며, [variant.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)을 이용하여 이미지 분류를 위한 머신러닝을 수행할 수 있습니다. 하지만, public component는 사용자의 목적에 따라 수정이 어려우므로, DLR image classification을 private component로 구현할 수 있다면 여러용도로 편리하게 사용할 수 있습니다. 
 
 IoT 디바이스에서 이미지 분류를 위한 머신러닝을 수행하는 2가지 방법에 대해 설명합니다.
 
