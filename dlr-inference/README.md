@@ -58,6 +58,48 @@ result: {'Label': 'plastic bag', 'Score': '4.5193176'}
 
 <img src="https://user-images.githubusercontent.com/52392004/209852850-4f3792e8-2423-4689-83ed-3b98881616d7.png" width="400">
 
+## Container
+
+## Basic Docker Commends
+
+Docker 소스로 이미지를 빌드합니다. 
+
+```java
+docker build -t dlr:v1 .
+```
+
+빌드된 이미지를 확인합니다. 
+
+```java
+docker images
+```
+
+Docker를 실행합니다. 
+
+```java
+docker run -d -p 8080:8080 dlr:v1
+```
+
+
+Docker의 실행된 container 정보를 확인합니다. 
+
+```java
+docker ps
+
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                    NAMES
+41e297948511   dlr:v1   "/lambda-entrypoint.…"   6 seconds ago   Up 4 seconds   0.0.0.0:8080->8080/tcp   stupefied_carson
+```
+
+Bash shell로 접속합니다.
+
+```java
+docker exec -it  41e297948511 /bin/bash
+```
+
+
+
+
+
 ## Reference 
 
 [Github: neo-ai-dlr](https://github.com/neo-ai/neo-ai-dlr)
