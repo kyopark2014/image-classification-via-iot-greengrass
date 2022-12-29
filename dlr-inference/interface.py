@@ -20,7 +20,7 @@ logger.setLevel(INFO)
 logger.addHandler(handler)
 
 IMAGE_DIR = f'{os.getcwd()}/images'
-print('IMAGE_DIR:', IMAGE_DIR)
+logger.info('IMAGE_DIR: %s', IMAGE_DIR)
 
 def load_image(image_path):
     # Case insenstive check of the image type.
