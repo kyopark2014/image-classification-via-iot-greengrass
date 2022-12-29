@@ -2,7 +2,7 @@
 
 ## AWS Built-in Component 
 
-AWS의 IoT Greengrass Built-in Component는 추론(Inference) 결과를 "ml/dlr/image-classification"라는 topic으로 IoT Core로 전송합니다. 아래와 같이 Configuratio을 수정할 수 있습니다.
+AWS의 이미지 분류를 위한 [IoT Greengrass Built-in Component](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)는 추론(Inference) 결과를 "ml/dlr/image-classification"라는 topic으로 IoT Core로 전송합니다. 아래와 같이 Configuratio을 수정할 수 있습니다.
 
 ### Configuration 
 
