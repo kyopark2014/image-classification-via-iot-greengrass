@@ -1,6 +1,10 @@
 # DLR Image Classification
 
-Greengrass에서 Built-in Component를 이용하여 이미지 분류를 수행합니다. 
+여기에서는 IoT 디바이스에서 이미지 분류를 위한 머신러닝을 수행하는것에 대해 설명하고자 합니다. IoT Greengrass의 Component를 이용하면 쉽게 IoT 디바이스를 위한 어플리케이션을 개발하고, 편리하게 배포할 수 있습니다. 관련하여 AWS에서는 Built-in Component인 [DLR image classification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)을 제공하고 있으며, [variant.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)을 이용하여 이미지 분류를 위한 머신러닝을 수행할 수 있습니다. 하지만, public component는 사용자의 목적에 따라 수정이 어려우므로, DLR image classification을 private component로 구현할 수 있다면 여러용도로 편리하게 사용할 수 있습니다. 
+
+IoT 디바이스에서 이미지 분류를 위한 머신러닝을 수행하는 2가지 방법에 대해 설명합니다.
+
+## Built in component를 이용하는 방법
 
 DLR image classification은 IoT Greengrass에서 제공하는 이미지 분류 Component로서 ResNet-50 모델을 사용합니다. 
 
@@ -22,7 +26,7 @@ DLR image classification은 IoT Greengrass에서 제공하는 이미지 분류 C
 }
 ```
 
-## Configuration 
+### Configuration 
 
 - "PublishResultsOnTopic": Inference 결과를 전달할 topic 이름입니다. 기본값은 "ml/dlr/image-classification" 입니다. 
 
@@ -49,6 +53,13 @@ sudo tail -f /greengrass/v2/logs/aws.greengrass.DLRImageClassification.log
 ## Workshop: Image Classification via Greengrass
 
 [DLR Workshop](https://github.com/kyopark2014/iot-greengrass-DLR-image-classification/blob/main/dlr-workshop.md)에서는 Workshop에 대해 설명합니다. 
+
+
+
+## Private component로 생성하여 활용하는 방법
+
+
+
 
 ### Greengrass Commands와 Memo
 
