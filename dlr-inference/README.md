@@ -22,8 +22,8 @@ pip install dlr
 ### Amazon Linux
 
 ```java
-yum update
-yum install libglvnd-glx
+sudo yum update
+sudo yum install libglvnd-glx
 
 pip3 install --upgrade pip
 pip3 install scikit-build wheel gluoncv dlr
