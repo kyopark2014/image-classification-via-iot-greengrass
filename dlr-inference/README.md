@@ -4,7 +4,7 @@ DLR(Deep Learning Runtime) 이미지 분류 모델은 ResNet-50 모델을 Greeng
 
 ## 라이브러리 설치
 
-### Ubuntu
+### Ubuntu 18.4
 
 Ubuntu인 경우에 아래와 같은 라이브러리를 설치합니다. OpenCV은 gluoncv 또는 opencv-python을 설치하면 됩니다.
 
