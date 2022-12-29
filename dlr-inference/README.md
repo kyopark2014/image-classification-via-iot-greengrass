@@ -33,6 +33,11 @@ sudo pip install dlr
 
 ## 실행 
 
+```java
+git clone https://github.com/kyopark2014/image-classification-via-iot-greengrass
+cd image-classification-via-iot-greengrass/dlr-inference/
+```
+
 아래와 같이 실행합니다. 
 
 ```java
