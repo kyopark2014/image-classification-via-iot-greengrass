@@ -17,7 +17,7 @@ pip3 install scikit-build wheel gluoncv dlr
 pip install dlr 
 ```
 
-### Amazon Linux
+### Amazon Linux 2
 
 Amazon Linux인 경우에 아래와 같이 필요한 라이브러리를 설치합니다. 
 
