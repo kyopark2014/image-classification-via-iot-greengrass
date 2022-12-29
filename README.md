@@ -10,7 +10,9 @@
 
 ## Private Component로 생성하는 방법
 
+## RESNEt example
 
+[RESNET-50 Demo](https://aws.amazon.com/marketplace/ai/model-evaluation?productId=cc879d3b-e759-4270-9afb-ceb50d2f7fe6)에서는 이미지 분류를 시험해 볼 수 있습니다.
 
 ### Greengrass Commands와 Memo
 
