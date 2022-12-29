@@ -165,11 +165,11 @@ wget https://raw.githubusercontent.com/kyopark2014/iot-greengrass-DLR-image-clas
 }
 ```
 
-마찬가지로, "aws.greengrass.Cli"을 설치합니다. 
+
 
 ### 4) 결과확인
 
-아래와 같이 Greengrass 디바이스에서 greengrass-cli을 이용하여, "aws.greengrass.DLRImageClassification"가 실행되고 있는지 확인합니다. 이때 "variant.DLR.ImageClassification.ModelStore" 등도 같이 설치됨을 알 수 있습니다. 
+로그를 결과를 확인하기 위하여, public component인 "aws.greengrass.Cli"을 설치합니다. 이후 아래와 같이 Greengrass 디바이스에서 greengrass-cli을 이용하여, "aws.greengrass.DLRImageClassification"가 실행되고 있는지 확인합니다. 이때 "variant.DLR.ImageClassification.ModelStore" 등도 같이 설치됨을 알 수 있습니다. 
 
 ```java
 $ sudo /greengrass/v2/bin/greengrass-cli component list
