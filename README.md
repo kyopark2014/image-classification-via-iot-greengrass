@@ -4,14 +4,16 @@
 
 아래와 같이 머신러닝을 이용하여 IoT 디바이스에서 이미지 분류를 수행하는 2가지 방법에 대해 설명합니다.
 
-## Built-in Component를 이용하는 방법
+## 머신러닝을 이용한 이미지 분류
 
 DLR image classification은 IoT Greengrass에서 제공하는 이미지 분류 Component로서 ResNet-50 모델을 사용합니다. 
 
+## Built-in Component를 이용하는 방법
+
+[Built-in Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/built-in-component.md)에서는 AWS에서 제공하는 Component로 이미지 분류를 제공하는것을 보여줍니다. 
 
 ## Private component로 생성하여 활용하는 방법
 
-[Built-in Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/built-in-component.md)에서는 AWS에서 제공하는 Component로 이미지 분류를 제공하는것을 보여줍니다. 
 
 
 ### Greengrass Commands와 Memo
