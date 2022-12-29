@@ -13,7 +13,7 @@
 
 [Custom Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/custom-component.md)에서는 DLR model을 이용하여 Component에서 추론(Inference)를 수행하는것을 설명합니다. 
 
-## RESNET-50 example
+## RESNET-50 examples
 
 - [GluonCV ResNet50 Classifier Demo](https://aws.amazon.com/marketplace/ai/model-evaluation?productId=587dc453-b6d6-487e-abc4-133b4bd3a0ed)
 
