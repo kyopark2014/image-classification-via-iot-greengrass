@@ -10,12 +10,8 @@ AWS의 이미지 분류를 위한 [IoT Greengrass Built-in Component](https://do
 
 - "Accelerator": CPU/GPU를 선택할 수 있습니다. 기본값은 cpu입니다. 
 
-- "ImageDirectory": 이미지를 읽어오는 경로입니다. 
-
-```java
-/greengrass/v2/packages/artifacts-unarchived/component-name/image_classification/sample_images/
-```
-
+- "ImageDirectory": 이미지를 읽어오는 경로입니다. 기본값은 "/greengrass/v2/packages/artifacts-unarchived/component-name/image_classification/sample_images/" 입니다.
+ 
 - "ImageName": 지원이미지 타입으로 jpeg, jpg, png, npy을 지원하고, 기본값은 jpeg 입니다. 
 
 - "InferenceInterval": Inference를 수행하는 주기입니다. 기본값은 3600입니다.
