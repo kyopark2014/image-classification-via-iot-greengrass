@@ -56,8 +56,8 @@ def handler(event, context):
 
     if cvimage is not None:
         result = predict_from_image(model, cvimage)
-        #logger.info('result: %s', result)
-        print('result', result)
+        logger.info('result: %s', result)
+        print('result(printed):', result)
         
         return {
             'statusCode': 200,
