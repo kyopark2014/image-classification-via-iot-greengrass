@@ -22,7 +22,7 @@ pip install dlr
 ### Amazon Linux
 
 ```java
-sudo yum update
+# sudo yum update
 sudo yum install libglvnd-glx
 
 pip3 install --upgrade pip
