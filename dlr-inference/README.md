@@ -93,10 +93,25 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS   
 Bash shell로 접속합니다.
 
 ```java
-docker exec -it  41e297948511 /bin/bash
+docker exec -it 41e297948511 /bin/bash
 ```
 
+아래와 같이 inference-test.py을 이용하여 정상적으로 추론이 되는지 확인합니다.
+```java
+python3 inference-test.py 
+```
 
+이때의 결과는 아래와 같이 추론을 통해 정상적으로 분류가 이루어집니다. 
+
+```java
+MODEL_DIR: /var/task/dlr/model
+2022-12-29 20:47:13,109 INFO Could not find libdlr.so in model artifact. Using dlr from /var/lang/dlr/libdlr.so
+IMAGE_DIR: /var/task/dlr/images
+cat.jpeg -> tabby, tabby cat
+dog.jpg -> Weimaraner
+macaw.jpg -> macaw
+pelican.jpeg -> pelican
+```
 
 
 
