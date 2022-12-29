@@ -1,25 +1,6 @@
 # Built-in Component를 이용한 Image Classification
 
-[Workshop - Image Classification via Greengrass](https://catalog.us-east-1.prod.workshops.aws/workshops/5ecc2416-f956-4273-b729-d0d30556013f/en-US/chapter7-ml/10-step1)에 따라 아래와 같이 이미지에 대한 분류를 수행할 수 있습니다. 
-
-
-"accessControl"을 보면 아래와 같이 "ml/dlr/image-classification" topic으로 IoT Core로 결과를 전송합니다. 
-
-```java
-{
-   "aws.greengrass.ipc.mqttproxy": {
-      "aws.greengrass.DLRImageClassification:mqttproxy:1": {
-         "policyDescription": "Allows access to publish via topic ml/dlr/image-classification.",
-         "operations": [
-            "aws.greengrass#PublishToIoTCore"
-         ],
-         "resources": [
-            "ml/dlr/image-classification"
-         ]
-      }
-   }
-}
-```
+AWS의 IoT Greengrass Built-in Component는 추론(Inference) 결과를 "ml/dlr/image-classification"라는 topic으로 IoT Core로 전송합니다. 아래와 같이 Configuratio을 수정할 수 있습니다.
 
 ### Configuration 
 
@@ -255,3 +236,4 @@ $ sudo cat aws.greengrass.DLRImageClassification.log
 ## Reference 
 
 [Workshop - Image Classification via Greengrass](https://catalog.us-east-1.prod.workshops.aws/workshops/5ecc2416-f956-4273-b729-d0d30556013f/en-US/chapter7-ml/10-step1)
+
