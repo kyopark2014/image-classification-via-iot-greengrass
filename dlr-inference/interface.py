@@ -15,9 +15,9 @@ from dlr.counter.phone_home import PhoneHome
 PhoneHome.disable_feature()   
 
 logger = getLogger()
-logging_handler = StreamHandler(stdout)
 logger.setLevel(INFO)
-logger.addHandler(logging_handler)
+#logging_handler = StreamHandler(stdout)
+#logger.addHandler(logging_handler)
 
 IMAGE_DIR = f'{os.getcwd()}/images'
 logger.info('IMAGE_DIR: %s', IMAGE_DIR)

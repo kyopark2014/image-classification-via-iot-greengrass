@@ -8,8 +8,8 @@ from ast import literal_eval
 import os
 
 logger = getLogger()
-#logging_handler = StreamHandler(stdout)
 logger.setLevel(INFO)
+#logging_handler = StreamHandler(stdout)
 #logger.addHandler(logging_handler)
 
 SCORE_THRESHOLD = 0.3
