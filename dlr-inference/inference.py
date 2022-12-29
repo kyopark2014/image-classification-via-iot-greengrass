@@ -8,9 +8,9 @@ from ast import literal_eval
 import os
 
 logger = getLogger()
-logging_handler = StreamHandler(stdout)
+#logging_handler = StreamHandler(stdout)
 logger.setLevel(INFO)
-logger.addHandler(logging_handler)
+#logger.addHandler(logging_handler)
 
 SCORE_THRESHOLD = 0.3
 MAX_NO_OF_RESULTS = 5
@@ -57,7 +57,7 @@ def handler(event, context):
     if cvimage is not None:
         result = predict_from_image(model, cvimage)
         logger.info('result: %s', result)
-        print('result(printed):', result)
+        #print('result(printed):', result)
         
         return {
             'statusCode': 200,
