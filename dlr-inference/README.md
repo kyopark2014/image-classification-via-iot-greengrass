@@ -6,7 +6,7 @@ DLR(Deep Learning Runtime) 이미지 분류 모델은 ResNet-50 모델을 Greeng
 
 ### Ubuntu
 
-아래와 같이 필요한 라이브러리를 설치합니다. 
+아래와 같이 필요한 라이브러리를 설치합니다. OpenCV은 gluoncv 또는 opencv-python을 설치하면 됩니다.
 
 ```java
 sudo apt-get install libgl1 -y
@@ -15,11 +15,12 @@ pip3 install --upgrade pip
 pip3 install scikit-build wheel gluoncv dlr
 
 pip install dlr 
-
-#pip3 install opencv-python
 ```
 
 ### Amazon Linux
+
+Amazon Linux인 경우에 
+
 
 ```java
 # sudo yum update
