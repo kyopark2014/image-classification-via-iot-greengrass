@@ -1,5 +1,7 @@
 # Built-in Component를 이용한 Image Classification
 
+## AWS Built-in Component 
+
 AWS의 IoT Greengrass Built-in Component는 추론(Inference) 결과를 "ml/dlr/image-classification"라는 topic으로 IoT Core로 전송합니다. 아래와 같이 Configuratio을 수정할 수 있습니다.
 
 ### Configuration 
@@ -20,22 +22,24 @@ AWS의 IoT Greengrass Built-in Component는 추론(Inference) 결과를 "ml/dlr/
 
 - "UseCamera": 카메라 사용시 설정합니다. 기본값은 false 입니다.
 
+### 로그 확인 
+
 로그는 아래와 같이 확인합니다. 
 
 ```java
 sudo tail -f /greengrass/v2/logs/aws.greengrass.DLRImageClassification.log
 ```
 
+## Cloud9으로 Greengrass 디바이스로 사용하기
 
-
-## Cloud9을 Greengrass 디바이스로 사용하기
+### Cloud9 준비
 
 [Cloud9을 Greengrass 디바이스로 사용하기](https://github.com/kyopark2014/iot-greengrass/blob/main/cloud9.md)에 따라 Cloud9에 Greengrass를 설치합니다. 
 
 
-## DLRImageClassification Component 설치하기 
+### DLRImageClassification Component 설치하기 
 
-### 사전준비
+#### 사전준비
 
 아래와 같이 먼저 필요한 라이브러리를 Greengrass 디바이스에서 설치합니다.
 
@@ -168,7 +172,7 @@ wget https://raw.githubusercontent.com/kyopark2014/iot-greengrass-DLR-image-clas
 
 마찬가지로, "aws.greengrass.Cli"을 설치합니다. 
 
-## 결과확인
+#### 결과확인
 
 아래와 같이 Greengrass 디바이스에서 greengrass-cli을 이용하여, "aws.greengrass.DLRImageClassification"가 실행되고 있는지 확인합니다. 이때 "variant.DLR.ImageClassification.ModelStore" 등도 같이 설치됨을 알 수 있습니다. 
 
