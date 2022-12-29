@@ -2,8 +2,9 @@
 
 DLR(Deep Learning Runtime) 이미지 분류 모델은 ResNet-50 모델을 Greengrass의 Artifact로 제공하는 머신러닝 모델입니다. 
 
-
 ## 라이브러리 설치
+
+### Ubuntu
 
 아래와 같이 필요한 라이브러리를 설치합니다. 
 
@@ -16,6 +17,18 @@ pip3 install scikit-build wheel gluoncv dlr
 pip install dlr 
 
 #pip3 install opencv-python
+```
+
+### Amazon Linux
+
+```java
+yum update
+yum install libglvnd-glx
+
+pip3 install --upgrade pip
+pip3 install scikit-build wheel gluoncv dlr
+
+sudo pip install dlr
 ```
 
 ## 실행 
