@@ -22,7 +22,7 @@ pip install dlr
 Amazon Linux인 경우에 아래와 같이 필요한 라이브러리를 설치합니다. 
 
 ```java
-# sudo yum update
+# sudo yum update -y
 sudo yum install libglvnd-glx -y
 
 pip3 install --upgrade pip
