@@ -20,7 +20,7 @@ AWS의 이미지 분류를 위한 [IoT Greengrass Built-in Component](https://do
 
 ### 로그 확인 
 
-로그는 아래와 같이 확인합니다. 
+아래와 같이 로그를 확인합니다. 
 
 ```java
 sudo tail -f /greengrass/v2/logs/aws.greengrass.DLRImageClassification.log
