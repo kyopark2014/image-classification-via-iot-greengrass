@@ -1,4 +1,4 @@
-# Built-in Component를 이용한 Image Classification
+# Built-in Component를 이용하여 IoT 디바이스에서 이미지 분류하기
 
 ## AWS Built-in Component 
 
