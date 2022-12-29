@@ -9,8 +9,8 @@ import os
 
 logger = getLogger()
 logger.setLevel(INFO)
-#logging_handler = StreamHandler(stdout)
-#logger.addHandler(logging_handler)
+logging_handler = StreamHandler(stdout)
+logger.addHandler(logging_handler)
 
 SCORE_THRESHOLD = 0.3
 MAX_NO_OF_RESULTS = 5
