@@ -1,4 +1,4 @@
-from logging import INFO, StreamHandler, getLogger
+from logging import INFO, DEBUG, StreamHandler, getLogger
 from sys import stdout
 from cv2 import resize
 from dlr import DLRModel
@@ -8,7 +8,7 @@ from ast import literal_eval
 import os
 
 logger = getLogger()
-logger.setLevel(INFO)
+logger.setLevel(DEBUG)
 logging_handler = StreamHandler(stdout)
 logger.addHandler(logging_handler)
 
