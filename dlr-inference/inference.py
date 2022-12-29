@@ -6,19 +6,18 @@ from numpy import argsort, frombuffer, fromstring, load, uint8
 from os import path
 from ast import literal_eval
 import os
-from inference import handler   
-    
+
 logger = getLogger()
-handler = StreamHandler(stdout)
+logging_handler = StreamHandler(stdout)
 logger.setLevel(INFO)
-logger.addHandler(handler)
+logger.addHandler(logging_handler)
 
 SCORE_THRESHOLD = 0.3
 MAX_NO_OF_RESULTS = 5
 SHAPE = (224, 224)
 
 MODEL_DIR = f'{os.getcwd()}/model'
-print('MODEL_DIR:', MODEL_DIR)
+logger.info('MODEL_DIR: %s', MODEL_DIR)
 
 # Read synset file
 LABELS = path.join(MODEL_DIR, "synset.txt")
@@ -27,7 +26,7 @@ with open(LABELS, "r") as f:
 
 def load_model(model_dir):
     model = DLRModel(model_dir, dev_type='cpu', use_default_dlr=False)
-    print('MODEL was loaded')
+    logger.info('MODEL was loaded')
     return model
 
 def predict_from_image(model, image_data):
@@ -42,8 +41,7 @@ def predict_from_image(model, image_data):
             if probabilities[i] >= SCORE_THRESHOLD:
                 result.append({"Label": str(synset[i]), "Score": str(probabilities[i])})
         
-        logger.info("result: {}".format(result))
-        
+        #logger.info("result: {}".format(result))
         return result
     except Exception as e:
         logger.error("Exception occured during prediction: {}".format(e))
@@ -51,16 +49,19 @@ def predict_from_image(model, image_data):
 model = load_model(MODEL_DIR)
 
 def handler(event, context):
-    print('event: ', event)
+    #logger.info('event: %s', event)
 
     image = event['body']
     cvimage = resize(image, SHAPE)
 
     if cvimage is not None:
-        return predict_from_image(model, cvimage)
+        result = predict_from_image(model, cvimage)
+        logger.info('result: %s', result)
+        
+        return {
+            'statusCode': 200,
+            'body': result
+        }   
     else:
         logger.error("Unable to capture an image using camera")
         exit(1)
-
-
-    

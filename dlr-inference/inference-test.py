@@ -2,20 +2,18 @@ from logging import INFO, StreamHandler, getLogger
 from sys import stdout
 from cv2 import imread
 from numpy import load
-from os import path
-from ast import literal_eval
 import os
 import traceback
-import json
+from inference import handler   
 
 import dlr
 from dlr.counter.phone_home import PhoneHome                             
 PhoneHome.disable_feature()   
 
 logger = getLogger()
-handler = StreamHandler(stdout)
+logging_handler = StreamHandler(stdout)
 logger.setLevel(INFO)
-logger.addHandler(handler)
+logger.addHandler(logging_handler)
 
 IMAGE_DIR = f'{os.getcwd()}/images'
 print('IMAGE_DIR:', IMAGE_DIR)
@@ -54,14 +52,36 @@ def load_image(image_path):
         exit(1)
     return image_data
 
-def main():
-    image = load_image(path.join(IMAGE_DIR, 'cat.jpeg'))
+
+def classifier(fname):
+    image = load_image(os.path.join(IMAGE_DIR, fname))
+    
+    event = {
+        'body': image
+    }
 
     try:
-        results = handler(image,"")          
-        print('result: ' + json.dumps(results['body']))
+        result = handler(event,"")          
+        return result['body'][0]['Label']
     except:
         traceback.print_exc()
+        
+def main():
+    fname = 'cat.jpeg'
+    label = classifier(fname)
+    print(fname + " -> "+ label)
+        
+    fname = 'dog.jpg'
+    label = classifier(fname)
+    print(fname + " -> "+ label)
+    
+    fname = 'macaw.jpg'
+    label = classifier(fname)
+    print(fname + " -> "+ label)
+    
+    fname = 'pelican.jpeg'
+    label = classifier(fname)
+    print(fname + " -> "+ label)    
         
 if __name__ == '__main__':
     main()
