@@ -54,10 +54,10 @@ def load_image(image_path):
 
 
 def classifier(fname):
-    image = load_image(os.path.join(IMAGE_DIR, fname))
+    image_data = load_image(os.path.join(IMAGE_DIR, fname))
     
     event = {
-        'body': image
+        'body': image_data
     }
 
     try:

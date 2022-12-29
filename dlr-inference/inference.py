@@ -51,12 +51,13 @@ model = load_model(MODEL_DIR)
 def handler(event, context):
     #logger.info('event: %s', event)
 
-    image = event['body']
-    cvimage = resize(image, SHAPE)
+    image_data = event['body']
+    cvimage = resize(image_data, SHAPE)
 
     if cvimage is not None:
         result = predict_from_image(model, cvimage)
-        logger.info('result: %s', result)
+        #logger.info('result: %s', result)
+        print('result', result)
         
         return {
             'statusCode': 200,
