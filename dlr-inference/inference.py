@@ -8,7 +8,7 @@ from ast import literal_eval
 import os
 
 logger = getLogger()
-logger.setLevel(DEBUG)
+logger.setLevel(INFO)
 logging_handler = StreamHandler(stdout)
 logger.addHandler(logging_handler)
 
@@ -26,7 +26,7 @@ with open(LABELS, "r") as f:
 
 def load_model(model_dir):
     model = DLRModel(model_dir, dev_type='cpu', use_default_dlr=False)
-    logger.info('MODEL was loaded')
+    logger.debug('MODEL was loaded')
     return model
 
 def predict_from_image(model, image_data):
@@ -56,8 +56,7 @@ def handler(event, context):
 
     if cvimage is not None:
         result = predict_from_image(model, cvimage)
-        logger.info('result: %s', result)
-        #print('result(printed):', result)
+        logger.debug('result: %s', result)
         
         return {
             'statusCode': 200,
