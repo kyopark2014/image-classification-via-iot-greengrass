@@ -11,20 +11,11 @@ DLR(Deep Learning Runtime) 이미지 분류 모델은 ResNet-50 모델을 Greeng
 sudo apt-get install libgl1 -y
 
 pip3 install --upgrade pip
-
-pip3 install scikit-build wheel
-
-pip3 install gluoncv
-#pip3 install opencv-python
-
-
+pip3 install scikit-build wheel gluoncv dlr
 
 pip install dlr 
-pip3 install dlr 
 
-
-#python3 -m pip install cmake pillow
-
+#pip3 install opencv-python
 ```
 
 ## 실행 
