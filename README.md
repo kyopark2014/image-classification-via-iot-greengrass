@@ -12,7 +12,7 @@ DLR image classification은 IoT Greengrass에서 제공하는 이미지 분류 C
 
 [Built-in Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/built-in-component.md)에서는 AWS에서 제공하는 Component로 이미지 분류를 제공하는것을 보여줍니다. 
 
-## Private component로 생성하여 활용하는 방법
+## Private Component로 활용하는 방법
 
 
 
