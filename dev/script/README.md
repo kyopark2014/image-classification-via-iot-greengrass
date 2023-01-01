@@ -46,7 +46,7 @@ INFO: Connection established with event stream RPC server
 Local deployment submitted! Deployment Id: 1d37b8ac-af2d-49dc-98f5-47563295e54b
 ```
 
-[inference.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/dev/local/inference.py)에서 아래와 같이 모델의 경로롤 표시하여야 합니다. 여기서는 "variant.DLR.ImageClassification.ModelStore"의 버전이 "2.1.9"기준으로 하고 있습니다. 버전이 업데이트 될 경우에는 아래의 경로를 수정하여야 합니다. 
+### 모델 변경시 수정사항
 
 여기서 사용하고 있는 코드는 "variant.DLR.ImageClassification.ModelStore"의 "2.1.9"버전을 기준으로 하고 있습니다. 모델의 경로가 바뀐다면 [inference.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/dev/script/artifacts/com.custom.ImageClassifier/1.0.0/inference.py)의 아래 경로를 수정하여야 합니다.
 
