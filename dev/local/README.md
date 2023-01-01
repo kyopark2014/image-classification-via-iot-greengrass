@@ -8,11 +8,16 @@
 
 ## 2) 필요한 라이브러리 설치
 
-Ubuntu 18.4에 맞게 아래와 같이 DLR 구동에 필요한 라이브러리를 설치합니다. 
+Ubuntu 18.4에 맞게 아래와 같이 DLR 구동에 필요한 라이브러리를 설치합니다.
+ 
+- libgl1은 root 권한으로 apt-get으로 
 
 ```java
 sudo apt-get install libgl1 -y
+```
 
+
+```java
 pip3 install --upgrade pip
 pip3 install scikit-build wheel 
 pip3 install opencv-python==4.6.0.66 
