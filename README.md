@@ -1,6 +1,6 @@
 # IoT 디바이스에서 머신러닝을 이용한 이미지 분류하기
 
-[IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 Component를 이용하여, IoT 디바이스에서 이미지 분류(Image Classification)를 쉽고 편리하게 이용하고자 합니다. AWS에서는 이미지 분류를 위한 Built-in Component인 [DLR image classification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)을 제공하고 있습니다. 이것은 [variant.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)을 이용하여, 이미지 분류를 위한 머신러닝을 수행합니다. 또한, 사용자의 특정 목적에 따라 수정이 편리하도록 public component에서 사용한 DLR image classification을 이용하여, custom component를 구현하는것을 설명합니다. 
+[IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 Component를 이용하여, IoT 디바이스에서 이미지 분류(Image Classification)를 쉽고 편리하게 이용하고자 합니다. AWS에서는 이미지 분류를 위한 Built-in Component인 [DLR image classification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)을 제공하고 있습니다. 이것은 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)을 이용하여, 이미지 분류를 위한 머신러닝을 수행합니다. 또한, 사용자의 특정 목적에 따라 수정이 편리하도록 public component에서 사용한 DLR image classification을 이용하여, custom component를 구현하는것을 설명합니다. 
 
 아래와 같이 머신러닝을 이용하여 IoT 디바이스에서 이미지 분류를 수행하는 2가지 방법에 대해 설명합니다. 여기서 사용하는 [DLR (Deep Learning Runtime)](https://github.com/neo-ai/neo-ai-dlr) 머신러닝 모델은 [ResNet-50 모델](https://viso.ai/deep-learning/resnet-residual-neural-network/)을 Greengrass에 맞게 최적화한 모델입니다. 
 
