@@ -2,15 +2,11 @@
 
 [DLR을 이용한 이미지 분류 추론](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dlr-inference)에서는 DLR 모델이 정상적으로 분류를 할 수 있는지 Cloud9과 Container에서 확인하였습니다. 여기서에서는 이미지 분류 Container를 이용하여 IoT 디바이스에 Custom Component로 배포하는 동작을 설명합니다. 
 
-## Greengrass 설치
+## 1) Greengrass 설치
 
 [Cloud9으로 Greengrass 환경 설정](https://github.com/kyopark2014/iot-greengrass/blob/main/cloud9.md)에 따라 Cloud9을 구성하고, Greengrass을 설치합니다.
 
-## DLR image classification model store 설치
-
-[variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html?icmpid=docs_gg_console)와 [aws.greengrass.Cli](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-cli-component.html?icmpid=docs_gg_console)을 설치합니다.
-
-## 필요한 라이브러리 설치
+## 2) 필요한 라이브러리 설치
 
 아래와 같이 DLR 구동에 필요한 라이브러리를 설치합니다. 
 
@@ -25,7 +21,12 @@ pip3 install dlr
 pip install dlr 
 ```
 
-### 테스트 
+## 3) DLR image classification model store 설치
+
+[variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html?icmpid=docs_gg_console)와 [aws.greengrass.Cli](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-cli-component.html?icmpid=docs_gg_console)을 설치합니다.
+
+
+### 4) 테스트 
 
 동작을 확인하기 위하여 아래와 같이 
 
