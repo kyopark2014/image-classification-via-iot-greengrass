@@ -1,6 +1,6 @@
 # Script를 이용해 Component를 설치하여 이미지 분류 추론 개발하기 
 
-[DLR을 이용한 이미지 분류 추론](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dlr-inference)을 Cloud9으로 개발하는 과정을 설명합니다. 
+[DLR을 이용한 이미지 분류 추론](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dlr-inference)을 component를 script로 local에서 설치하여 개발하는 과정을 설명합니다. 
 
 ## 1) Greengrass 설치
 
