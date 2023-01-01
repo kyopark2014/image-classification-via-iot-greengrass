@@ -15,8 +15,7 @@ logger.setLevel(INFO)
 #logging_handler = StreamHandler(stdout)
 #logger.addHandler(logging_handler)
 
-#IMAGE_DIR = f'{os.getcwd()}/images'
-IMAGE_DIR = '/greengrass/v2/packages/artifacts/com.custom.ImageClassifier/1.0.0/images'
+IMAGE_DIR = f'{os.getcwd()}/images'
 
 print('IMAGE_DIR:', IMAGE_DIR)
 
