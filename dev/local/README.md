@@ -10,12 +10,13 @@
 
 Ubuntu 18.4에 맞게 아래와 같이 DLR 구동에 필요한 라이브러리를 설치합니다.
  
-- libgl1은 root 권한으로 apt-get으로 
+libgl1은 root 권한으로 apt-get으로 설치합니다.
 
 ```java
 sudo apt-get install libgl1 -y
 ```
 
+python 라이브러리를 아래처럼 설치합니다. 
 
 ```java
 pip3 install --upgrade pip
@@ -29,6 +30,8 @@ pip install dlr
 ## 3) DLR image classification model store 설치
 
 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html?icmpid=docs_gg_console)와 [aws.greengrass.Cli](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-cli-component.html?icmpid=docs_gg_console)을 설치합니다.
+
+
 
 ### 4) 테스트 
 
