@@ -40,6 +40,11 @@ pip install dlr
 
 ![image](https://user-images.githubusercontent.com/52392004/210172225-586dfc6d-a4e6-48cc-a842-f14d14d3ca02.png)
 
+[inference.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/dev/local/inference.py)에서 아래와 같이 모델의 경로롤 표시하여야 합니다. 여기서는 "variant.DLR.ImageClassification.ModelStore"의 버전이 "2.1.9"기준으로 하고 있습니다. 버전이 업데이트 될 경우에는 아래의 경로를 수정하여야 합니다. 
+
+```java
+MODEL_DIR = '/greengrass/v2/packages/artifacts-unarchived/variant.DLR.ImageClassification.ModelStore/2.1.9/DLR-resnet50-x86_64-cpu-ImageClassification'
+```
 
 ### 4. 테스트 
 
