@@ -20,7 +20,7 @@
 ![image](https://user-images.githubusercontent.com/52392004/210172949-5f077172-63af-44c3-8e47-a11abb19bcfb.png)
 
 
-## 2) Component를 설치하기 위하여 Script, Artifact, Receip을  다운로드
+## 3. Component를 설치하기 위하여 Script, Artifact, Receip을  다운로드
 
 아래와 같이 github repository를 다운르드후 dev/script로 이동합니다. 
 
@@ -46,7 +46,7 @@ INFO: Connection established with event stream RPC server
 Local deployment submitted! Deployment Id: 1d37b8ac-af2d-49dc-98f5-47563295e54b
 ```
 
-## 결과 확인하기 
+## 4. 결과 확인하기 
 
 아래와 같이 로그로 추론 결과를 확인할 수 있습니다. 
 
