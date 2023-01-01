@@ -32,7 +32,7 @@ pip install dlr
 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html?icmpid=docs_gg_console)와 [aws.greengrass.Cli](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-cli-component.html?icmpid=docs_gg_console)을 설치합니다.
 
 1) [Deployment Console](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/greengrass/v2/deployments)에서 [Create]를 선택합니다.
-2) [Deployment target] - [Target type]을 "Core device"를 설정하고, Target name으로 greengrass 설치시 사용한 이름을 아래처럼 입력합니다. 이후 [Next]선택합니다. 
+2) [Deployment target] - [Target type]을 "Core device"를 설정하고, Target name으로 greengrass 설치시 사용한 이름을 아래처럼 입력합니다. 여기서는 "GreengrassCore-18163f7ac3e"으로 입력하고, [Next]선택합니다. 
 
 ![noname](https://user-images.githubusercontent.com/52392004/210171401-a8b07744-97fd-47b4-99a2-6f3bffd55252.png)
 
