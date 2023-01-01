@@ -15,13 +15,7 @@ Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 
 
 [Custom Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/custom-component.md)에서는 DLR model을 이용하여 Component에서 추론(Inference)를 수행하는것을 설명합니다. 
 
-## RESNET-50 examples
 
-- [GluonCV ResNet50 Classifier Demo](https://aws.amazon.com/marketplace/ai/model-evaluation?productId=587dc453-b6d6-487e-abc4-133b4bd3a0ed)
-
-- [RESNET-50 Demo](https://aws.amazon.com/marketplace/ai/model-evaluation?productId=cc879d3b-e759-4270-9afb-ceb50d2f7fe6)
-
- 
 
 ### Greengrass Commands와 Memo
 
