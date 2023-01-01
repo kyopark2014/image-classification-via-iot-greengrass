@@ -43,10 +43,26 @@ pip install dlr
 
 ### 4. 테스트 
 
-동작을 확인하기 위하여 아래와 같이 
+동작을 확인하기 위하여 아래와 같이 코드를 다운로드 하고 소스 코드 위치로 이동합니다.
 
 ```java
 git clone https://github.com/kyopark2014/image-classification-via-iot-greengrass
 cd image-classification-via-iot-greengrass/dev/local
 ```
 
+이미지 분류 모델은 "variant.DLR.ImageClassification.ModelStore"으로 부터 가져오므로 아래와 같이 root 권한으로 실행합니다. 
+
+```java
+sudo python3 inference-test.py 
+```
+
+이때의 결과는 아래와 같습니다. 
+
+```java
+MODEL_DIR: /greengrass/v2/packages/artifacts-unarchived/variant.DLR.ImageClassification.ModelStore/2.1.9/DLR-resnet50-x86_64-cpu-ImageClassification
+IMAGE_DIR: /home/ubuntu/environment/image-classification-via-iot-greengrass/dev/local/images
+cat.jpeg -> tabby, tabby cat
+dog.jpg -> Weimaraner
+macaw.jpg -> macaw
+pelican.jpeg -> pelican
+```
