@@ -36,9 +36,9 @@ pip install dlr
 
 ![noname](https://user-images.githubusercontent.com/52392004/210171401-a8b07744-97fd-47b4-99a2-6f3bffd55252.png)
 
-3) [Select components] - [Public components] 에서 아래와 같이 "aws.greengrass.Cli"와 "aws.greengrass.DLRImageClassification"을 선택합니다. 이후 나머지 설정은 기본값으로 하여 [Deploy]를 선택합니다. 
+3) [Select components] - [Public components] 에서 아래와 같이 "aws.greengrass.Cli"와 "variant.ImageClassification.ModelStore"을 선택합니다. 이후 나머지 설정은 기본값으로 하여 [Deploy]를 선택합니다. 
 
-![image](https://user-images.githubusercontent.com/52392004/210171581-349197ee-95c5-4700-9425-06a6895257db.png)
+![image](https://user-images.githubusercontent.com/52392004/210172150-07246d6a-a197-49e6-8902-8947bdb5c806.png)
 
 
 ### 4. 테스트 
