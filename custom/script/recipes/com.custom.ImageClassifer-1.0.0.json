@@ -1,0 +1,45 @@
+{
+    "RecipeFormatVersion": "2020-01-25",
+    "ComponentName": "com.custom.ImageClassifier",
+    "ComponentVersion": "1.0.0",
+    "ComponentDescription": "A component that publishes messages.",
+    "ComponentPublisher": "Amazon",
+    "ComponentConfiguration": {
+      "DefaultConfiguration": {
+        "accessControl": {
+          "aws.greengrass.ipc.pubsub": {
+            "com.custom.ImageClassifier:pubsub:1": {
+              "policyDescription": "Allows access to publish to all topics.",
+              "operations": [
+                "aws.greengrass#PublishToTopic"
+              ],
+              "resources": [
+                "*"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ComponentDependencies": {
+        "variant.DLR.ImageClassification.ModelStore": {
+            "VersionRequirement": ">=2.1.0 <2.2.0",
+            "DependencyType": "HARD"
+        }
+    },
+    "Manifests": [
+      {        
+        "Lifecycle": {
+            "Install": {
+                "Script": [
+                    "pip3 install scikit-build wheel opencv-python==4.6.0.66 dlr",
+                    "pip install dlr"
+                ]
+            },
+            "RequiresPrivilege": "true",
+            "Run": "python3 -u {artifacts:path}/inference-test.py"
+        }
+      }
+    ]
+  }
+  
