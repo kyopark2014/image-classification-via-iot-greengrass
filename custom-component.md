@@ -59,3 +59,7 @@ pelican.jpeg -> pelican
 
 ### Local component에서 조회하기 
 
+
+[RequiresPrivilege](https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html)
+
+(Optional) You can run the script with root privileges. If you set this option to true, then the AWS IoT Greengrass Core software runs this lifecycle script as root instead of as the system user that you configure to run this component. Defaults to false.
