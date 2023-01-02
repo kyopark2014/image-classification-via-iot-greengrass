@@ -34,7 +34,7 @@
       },
       "Run": {
         "RequiresPrivilege": "false",
-        "Script": "python3 {artifacts:path}/requester.py"
+        "Script": "python3 -u {artifacts:path}/requester.py"
       }
     }
   }]
