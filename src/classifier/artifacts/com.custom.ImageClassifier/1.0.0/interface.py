@@ -11,7 +11,7 @@ from awsiot.greengrasscoreipc.model import (
     BinaryMessage    
 )
 
-from inference import handler  
+#from inference import handler  
 
 try:
     ipc_client = GreengrassCoreIPCClientV2()

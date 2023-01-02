@@ -2,17 +2,17 @@
   "RecipeFormatVersion": "2020-01-25",
   "ComponentName": "com.custom.requester",
   "ComponentVersion": "1.0.0",
-  "ComponentDescription": "A component that publishes messages.",
+  "ComponentDescription": "A component that requests image classification.",
   "ComponentPublisher": "Amazon",
   "ComponentConfiguration": {
     "DefaultConfiguration": {
       "accessControl": {
         "aws.greengrass.ipc.pubsub": {
-          "com.custom.ImageClassifier:pubsub:1": {
+          "com.custom.requester:pubsub:1": {
             "policyDescription": "Allows access to publish to all topics.",
             "operations": [
               "aws.greengrass#PublishToTopic",
-              "aws.greengrass#SubscribeToTopic"  
+              "aws.greengrass#SubscribeToTopic"                  
             ],
             "resources": [
               "local/inference",
@@ -23,14 +23,19 @@
       }
     }
   },
-  "Manifests": [
-    {        
-      "Lifecycle": {
-        "Run": {
-          "RequiresPrivilege": "true",
-          "Script": "python3 {artifacts:path}/requester.py"
-        }
+  "Manifests": [{        
+    "Platform": {
+      "os": "linux"
+    },
+    "Lifecycle": {
+      "Install": {
+        "RequiresPrivilege": "false",
+        "Script": "pip3 install awsiotsdk"
+      },
+      "Run": {
+        "RequiresPrivilege": "false",
+        "Script": "python3 {artifacts:path}/requester.py"
       }
     }
-  ]
+  }]
 }
