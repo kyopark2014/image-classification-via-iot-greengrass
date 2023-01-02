@@ -38,7 +38,7 @@
         },
         "Run": {
           "RequiresPrivilege": "true",
-          "Script": "sudo python3 {artifacts:path}/inference-test.py"
+          "Script": "sudo python3 {artifacts:path}/interface.py"
         }
       }
     }
