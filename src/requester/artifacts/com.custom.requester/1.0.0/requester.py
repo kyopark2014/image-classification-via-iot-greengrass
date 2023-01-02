@@ -3,7 +3,6 @@ import traceback
 import time
 import json
 import os
-import pandas as pd
 from awsiot.greengrasscoreipc.clientv2 import GreengrassCoreIPCClientV2
 from awsiot.greengrasscoreipc.model import (
     SubscriptionResponseMessage,
@@ -27,7 +26,10 @@ def main():
         
         try:
             while True: 
-                message = "hello"
+                message = {
+                    'image_dir': '/greengrass/v2/packages/artifacts/com.custom.ImageClassifier/1.0.0/images',
+                    'fname': 'cat.jpeg'
+                }
                 publish_binary_message_to_topic(ipc_client, topic,  json.dumps(message))
                 print('request:', json.dumps(message))
                 

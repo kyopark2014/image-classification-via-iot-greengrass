@@ -37,7 +37,7 @@
       },
       "Run": {
         "RequiresPrivilege": "true",
-        "Script": "sudo python3 {artifacts:path}/interface.py"
+        "Script": "python3 {artifacts:path}/interface.py"
       }
     }
   }]
