@@ -86,7 +86,7 @@ export class customComponent extends cdk.Stack {
         },
         "Lifecycle": {
           "Install": "pip3 install awsiotsdk",
-          "Run": "python3 -u {artifacts:path}/publisher.py"
+          "Run": "python3 -u {artifacts:path}/requester.py"
         },
         "Artifacts": [
           {
@@ -187,12 +187,12 @@ export class componentDeployment extends cdk.Stack {
     const cfnDeployment = new greengrassv2.CfnDeployment(this, 'MyCfnDeployment', {
       targetArn: `arn:aws:iot:ap-northeast-2:`+accountId+`:thing/`+deviceName,    
       components: {
-      //  "com.custom.requester": {
-      //    componentVersion: version_requester
-      //  },
-      //  "com.custom.ImageClassifier": {
-      //    componentVersion: version_ImageClassifier
-      //  },
+        "com.custom.requester": {
+          componentVersion: version_requester
+        },
+        "com.custom.ImageClassifier": {
+          componentVersion: version_ImageClassifier
+        },
         "aws.greengrass.Cli": {
           componentVersion: "2.9.2"
         }
