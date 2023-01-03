@@ -99,9 +99,14 @@ export class customComponent extends cdk.Stack {
       }]
     }`
 
-    new greengrassv2.CfnComponentVersion(this, 'MyCfnComponentVersion-requester', {
+    const cfnComponentVersion1 = new greengrassv2.CfnComponentVersion(this, 'MyCfnComponentVersion-requester', {
       inlineRecipe: recipe_requester,
     });
+
+    new cdk.CfnOutput(this, 'componentName1', {
+      value: cfnComponentVersion1.attrComponentName,
+      description: 'The nmae of component',
+    });  
     
     // recipe of component - com.custom.ImageClassifier
     const recipe_ImageClassifier = `{
@@ -167,7 +172,7 @@ export class customComponent extends cdk.Stack {
       inlineRecipe: recipe_ImageClassifier,
     });
 
-    new cdk.CfnOutput(this, 'componentName', {
+    new cdk.CfnOutput(this, 'componentName2', {
       value: cfnComponentVersion2.attrComponentName,
       description: 'The nmae of component',
     });     
@@ -182,9 +187,9 @@ export class componentDeployment extends cdk.Stack {
     const cfnDeployment = new greengrassv2.CfnDeployment(this, 'MyCfnDeployment', {
       targetArn: `arn:aws:iot:ap-northeast-2:`+accountId+`:thing/`+deviceName,    
       components: {
-        "com.custom.requester": {
-          componentVersion: version_requester
-        },
+      //  "com.custom.requester": {
+      //    componentVersion: version_requester
+      //  },
       //  "com.custom.ImageClassifier": {
       //    componentVersion: version_ImageClassifier
       //  },
