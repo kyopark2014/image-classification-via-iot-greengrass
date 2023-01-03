@@ -26,7 +26,7 @@ pip install dlr
 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html?icmpid=docs_gg_console)와 [aws.greengrass.Cli](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-cli-component.html?icmpid=docs_gg_console)을 설치합니다.
 
 
-### 4) 테스트 
+## 4) 테스트 
 
 동작을 확인하기 위하여 아래와 같이 
 
