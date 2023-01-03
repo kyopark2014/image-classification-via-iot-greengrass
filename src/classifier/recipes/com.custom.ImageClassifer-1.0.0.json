@@ -9,7 +9,7 @@
       "accessControl": {
         "aws.greengrass.ipc.pubsub": {
           "com.custom.ImageClassifier:pubsub:1": {
-            "policyDescription": "Allows access to publish to all topics.",
+            "policyDescription": "Allows access to publish/subscribe to the topics.",
             "operations": [
               "aws.greengrass#PublishToTopic",
               "aws.greengrass#SubscribeToTopic"                  
