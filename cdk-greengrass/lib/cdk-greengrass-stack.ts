@@ -41,20 +41,24 @@ export class CdkGreengrassStack extends cdk.Stack {
     }); 
 
     // components deployment
-    new componentDeployment(scope, "component", s3Bucket.bucketName, accountId, deviceName)    
+    const version_requester = "1.0.0", version_ImageClassifier = "1.0.0"
+    const component = new customComponent(scope, "component", s3Bucket.bucketName, version_requester, version_ImageClassifier)    
+
+    // deploy components
+    const deployment = new componentDeployment(scope, "deployments", version_requester, version_ImageClassifier, accountId, deviceName)   
+    deployment.addDependency(component); 
   }
 }
 
-export class componentDeployment extends cdk.Stack {
-  constructor(scope: Construct, id: string, bucketName: string, accountId: string, deviceName: string, props?: cdk.StackProps) {    
+export class customComponent extends cdk.Stack {
+  constructor(scope: Construct, id: string, bucketName: string, version_requester: string, version_ImageClassifier: string, props?: cdk.StackProps) {    
     super(scope, id, props);
 
     // recipe of component - com.custom.requester
-    const version = "1.0.0"
     const recipe_requester = `{
       "RecipeFormatVersion": "2020-01-25",
       "ComponentName": "com.custom.requester",
-      "ComponentVersion": "${version}",
+      "ComponentVersion": "${version_requester}",
       "ComponentDescription": "A component that requests the image classification.",
       "ComponentPublisher": "Amazon",
       "ComponentConfiguration": {
@@ -89,7 +93,7 @@ export class componentDeployment extends cdk.Stack {
             "URI": "${'s3://'+bucketName}/requester/artifacts/com.custom.requester/1.0.0/requester.py"
           },
           {
-            "URI": "${'s3://'+bucketName}/requester/artifacts/com.custom.requester/1.0.0/images/cat.jpeg"
+            "URI": "${'s3://'+bucketName}/requester/artifacts/com.custom.requester/1.0.0/pelican.jpeg"
           }
         ]
       }]
@@ -103,7 +107,7 @@ export class componentDeployment extends cdk.Stack {
     const recipe_ImageClassifier = `{
       "RecipeFormatVersion": "2020-01-25",
       "ComponentName": "com.custom.ImageClassifier",
-      "ComponentVersion": "${version}",
+      "ComponentVersion": "${version_ImageClassifier}",
       "ComponentDescription": "A component that subscribe a topic from requester.",
       "ComponentPublisher": "Amazon",
       "ComponentConfiguration": {
@@ -166,17 +170,23 @@ export class componentDeployment extends cdk.Stack {
     new cdk.CfnOutput(this, 'componentName', {
       value: cfnComponentVersion2.attrComponentName,
       description: 'The nmae of component',
-    }); 
-    
-    // deployments
+    });     
+  }
+}
+
+export class componentDeployment extends cdk.Stack {
+  constructor(scope: Construct, id: string, version_requester: string, version_ImageClassifier: string, accountId: string, deviceName: string, props?: cdk.StackProps) {    
+    super(scope, id, props);
+
+        // deployments
     const cfnDeployment = new greengrassv2.CfnDeployment(this, 'MyCfnDeployment', {
       targetArn: `arn:aws:iot:ap-northeast-2:`+accountId+`:thing/`+deviceName,    
       components: {
         "com.custom.requester": {
-          componentVersion: version
+          componentVersion: version_requester
         },
         "com.custom.ImageClassifier": {
-          componentVersion: version
+          componentVersion: version_ImageClassifier
         },
         "aws.greengrass.Cli": {
           componentVersion: "2.9.2"
