@@ -185,9 +185,9 @@ export class componentDeployment extends cdk.Stack {
         "com.custom.requester": {
           componentVersion: version_requester
         },
-        "com.custom.ImageClassifier": {
-          componentVersion: version_ImageClassifier
-        },
+      //  "com.custom.ImageClassifier": {
+      //    componentVersion: version_ImageClassifier
+      //  },
         "aws.greengrass.Cli": {
           componentVersion: "2.9.2"
         }
