@@ -51,8 +51,14 @@ def publish_binary_message_to_topic(ipc_client, topic, message):
 ```python
 _, operation = ipc_client.subscribe_to_topic(topic="local/result", on_stream_event=on_stream_event,
   on_stream_error=on_stream_error, on_stream_closed=on_stream_closed)
+            
+def on_stream_event(event: SubscriptionResponseMessage) -> None:
+    try:
+        message = str(event.binary_message.message, 'utf-8')
+        print('result: %s' % (message))
 
-print('Successfully subscribed to topic: ' + "local/result")
+    except:
+        traceback.print_exc()
 ```        
 
 [Pub/Sub IPC](https://docs.aws.amazon.com/greengrass/v2/developerguide/ipc-publish-subscribe.html)를 이용해 edge에 설치된 component들 끼리 메시지를 교환하기 위해서는 [recipe](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/recipes/com.custom.requester-1.0.0.json)을 아래와 같이 설정합니다. 
