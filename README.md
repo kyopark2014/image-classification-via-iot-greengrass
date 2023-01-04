@@ -11,6 +11,169 @@ DLR model을 활용하기 위해서 Built-in Component인 [DLR image classificat
 
 [DLR image classification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)은 AWS에서 제공하는 public component로서 오픈 소스 프로젝트인 [DLR (Deep Learning Runtime)](https://github.com/neo-ai/neo-ai-dlr)을 베이스로 IoT 디바이스에서 이미지 분류를 추론(Inference)할 수 있도록 해줍니다. 
 
+
+### "com.custom.requester"
+
+["com.custom.requester"](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/artifacts/com.custom.requester/1.0.0/requester.py)은 [Greengrass IPC Client V2](https://github.com/aws/aws-iot-device-sdk-python-v2)를 이용해 아래와 같이 "com.custom.ImageClassifer"로 추론 요청을 수행합니다. 
+
+요청은 JSON 포맷으로된 메시지를 바이너리로 변환하여 
+```python
+from awsiot.greengrasscoreipc.clientv2 import GreengrassCoreIPCClientV2
+
+ipc_client = GreengrassCoreIPCClientV2()
+
+message = {
+  'image_dir': BASE_DIR,
+  'fname': 'pelican.jpeg'
+}
+publish_binary_message_to_topic(ipc_client, topic,  json.dumps(message))
+
+def publish_binary_message_to_topic(ipc_client, topic, message):
+    binary_message = BinaryMessage(message=bytes(message, 'utf-8'))
+    publish_message = PublishMessage(binary_message=binary_message)
+    ipc_client.publish_to_topic(topic=topic, publish_message=publish_message)
+```    
+
+추론의 결과는 토픽명이 "local/result"으로 아래처럼 전달 받습니다. 
+
+```python
+_, operation = ipc_client.subscribe_to_topic(topic="local/result", on_stream_event=on_stream_event,
+  on_stream_error=on_stream_error, on_stream_closed=on_stream_closed)
+
+print('Successfully subscribed to topic: ' + "local/result")
+```        
+
+[Pub/Sub IPC](https://docs.aws.amazon.com/greengrass/v2/developerguide/ipc-publish-subscribe.html)를 이용해 edge에 설치된 component들 끼리 메시지를 교환하기 위해서는 [recipe](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/recipes/com.custom.requester-1.0.0.json)을 아래와 같이 설정합니다. 
+
+```java
+"ComponentConfiguration": {
+    "DefaultConfiguration": {
+      "accessControl": {
+        "aws.greengrass.ipc.pubsub": {
+          "com.custom.requester:pubsub:1": {
+            "policyDescription": "Allows access to publish/subscribe to the topics.",
+            "operations": [
+              "aws.greengrass#PublishToTopic",
+              "aws.greengrass#SubscribeToTopic"                  
+            ],
+            "resources": [
+              "local/inference",
+              "local/result"
+            ]
+          }
+        }
+      }
+    }
+  }
+  ```
+
+### "com.custom.ImageClassifier"
+
+[interface.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/interface.py)에서는 "local/inference" 토픽으로 메시지를 받으면, classifier()로 요청합니다. 
+
+```python
+from classifier import classifier  
+
+ipc_client = GreengrassCoreIPCClientV2()
+topic = 'local/inference'
+
+def on_stream_event(event: SubscriptionResponseMessage) -> None:
+    try:
+        message = str(event.binary_message.message, 'utf-8')
+        event_topic = event.binary_message.context.topic
+        logger.info("Received new message on topic %s: %s", topic, message)      
+        
+        # Inference
+        if event_topic == topic:
+            json_data = json.loads(message) # json decoding        
+            result = classifier(json_data)       
+            logger.info("result: {}".format(result))
+
+            # return the result to the consumer        
+            publish_binary_message_to_topic(ipc_client, "local/result",  result)            
+```
+
+[classifier.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/classifier.py)는 아래와 같이 이미지를 로드하여 실제 추론을 수행하는 ["inference"](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/interface.py)의 handler를 호출하고 결과가 오면, 가장 확률이 높은 결과를 리턴합니다. 
+
+```python
+from inference import handler  
+
+def classifier(data):
+    image_data = load_image(os.path.join(data['image_dir'], data['fname']))
+    
+    event = {
+        'body': image_data
+    }
+
+    try:
+        result = handler(event,"")          
+        logger.debug("result: %s", result['body'][0]['Label'])
+        
+        return result['body'][0]['Label']
+```
+
+[inference.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/inference.py)에서는 아래와 같이 기학습된 모델을 로딩하고 전달받은 이미지 데이터를 resize 한후 추론을 수행합니다. 
+
+```java
+SCORE_THRESHOLD = 0.3
+MAX_NO_OF_RESULTS = 5
+SHAPE = (224, 224)
+
+MODEL_DIR = '/greengrass/v2/packages/artifacts-unarchived/variant.DLR.ImageClassification.ModelStore/2.1.9/DLR-resnet50-x86_64-cpu-ImageClassification'
+
+def load_model(model_dir):
+    model = DLRModel(model_dir, dev_type='cpu', use_default_dlr=False)
+    logger.debug('MODEL was loaded')
+    return model
+
+model = load_model(MODEL_DIR)
+
+def handler(event, context):
+    image_data = event['body']
+    cvimage = resize(image_data, SHAPE)
+
+    if cvimage is not None:
+        result = predict_from_image(model, cvimage)
+        return {
+            'statusCode': 200,
+            'body': result
+        }  
+
+def predict_from_image(model, image_data):
+    result = []
+    try:
+        model_output = model.run(image_data)
+
+        probabilities = model_output[0][0]
+        sort_classes_by_probability = argsort(probabilities)[::-1]
+        for i in sort_classes_by_probability[: MAX_NO_OF_RESULTS]:
+            if probabilities[i] >= SCORE_THRESHOLD:
+                result.append({"Label": str(synset[i]), "Score": str(probabilities[i])})
+        
+        return result
+```
+
+[recipes](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/recipes/com.custom.ImageClassifer-1.0.0.json)에서는 libgl1을 비롯한 라이브러리를 설치합니다.
+
+```java
+"Manifests": [{        
+  "Lifecycle": {
+    "Install": {
+        "RequiresPrivilege": "true",
+          "Script": "apt-get install libgl1 -y\n pip3 install --upgrade pip \n pip3 install scikit-build wheel opencv-python==4.6.0.66 dlr\n python -m pip install dlr\n pip3 install awsiotsdk"
+    },
+  "Run": {
+    "RequiresPrivilege": "true",
+    "Script": "python3 -u {artifacts:path}/interface.py"
+  }
+}
+```
+
+### CDK를 이용한 Component 배포
+
+
+
+
 [Built-in Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/built-in-component.md)에서는 public component인 aws.greengrass.DLRImageClassification을 설치하고 사용하는 방법에 대해 설명하고 있습니다. 
 
 사용자의 특정 목적에 따라 이미지 분류를 하려면, public component으로 어렵고, 아래와 같이 custom component를 생성하여 사용하여야 합니다. 
