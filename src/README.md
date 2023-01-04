@@ -2,11 +2,9 @@
 
 여기에서는 AWS의 개발환경인 Cloud9을 이용하여 Docker image된 ML 알고리즘을 IoT Greengrass에 배포하는 일련의 과정을 설명합니다. 
 
-## 1) Cloud9을 Greengrass 디바이스로 사용하기
-
 Cloud9은 브라우저만으로 코드를 작성, 실행 및 디버깅할 수 있는 클라우드 기반 IDE(통합 개발 환경)로서 Greengrass 디바이스 동작을 테스트하기에 유용합니다.
 
-### Cloud9 생성
+### 1) Cloud9 생성
 
 [Cloud9 Console](https://ap-northeast-2.console.aws.amazon.com/cloud9control/home?region=ap-northeast-2#/create)에서 아래와 같이 [Name]을 입력합니다.
 
@@ -22,8 +20,6 @@ Platform은 "Ubuntu Server 18.04 LTS"을 선택합니다.
 
 
 ## 2) Greengrass 설치하기 
-
-### Greengrass installer 다운로드
 
 Cloud9을 오픈하고 터미널을 실행합니다.
 
