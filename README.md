@@ -11,6 +11,18 @@ DLR model을 활용하기 위해서 Built-in Component인 [DLR image classificat
 
 [DLR image classification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)은 AWS에서 제공하는 public component로서 오픈 소스 프로젝트인 [DLR (Deep Learning Runtime)](https://github.com/neo-ai/neo-ai-dlr)을 베이스로 IoT 디바이스에서 이미지 분류를 추론(Inference)할 수 있도록 해줍니다. 
 
+[Built-in Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/built-in-component.md)에서는 public component인 aws.greengrass.DLRImageClassification을 설치하고 사용하는 방법에 대해 설명하고 있습니다. 
+
+사용자의 특정 목적에 따라 이미지 분류를 하려면, public component으로 어렵고, 아래와 같이 custom component를 생성하여 사용하여야 합니다. 
+
+
+
+
+## Custom Component로 이용하는 방법
+
+Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 추론 개발하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dev/local)와 [Script를 이용해 Component를 설치하여 이미지 분류 추론 개발하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dev/script)에서 상세하게 설명하고 있습니다. 
+
+
 
 ### "com.custom.requester"
 
@@ -174,14 +186,7 @@ def predict_from_image(model, image_data):
 
 
 
-[Built-in Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/built-in-component.md)에서는 public component인 aws.greengrass.DLRImageClassification을 설치하고 사용하는 방법에 대해 설명하고 있습니다. 
 
-사용자의 특정 목적에 따라 이미지 분류를 하려면, public component으로 어렵고, 아래와 같이 custom component를 생성하여 사용하여야 합니다. 
-
-
-## Custom Component로 이용하는 방법
-
-Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 추론 개발하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dev/local)와 [Script를 이용해 Component를 설치하여 이미지 분류 추론 개발하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dev/script)에서 상세하게 설명하고 있습니다. 
 
 
 
