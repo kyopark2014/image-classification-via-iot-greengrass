@@ -20,9 +20,18 @@ DLR model을 활용하기 위해서 Built-in Component인 [DLR image classificat
 
 Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 추론 개발하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dev/local)와 [Script를 이용해 Component를 설치하여 이미지 분류 추론 개발하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dev/script)에서 상세하게 설명하고 있습니다. 
 
-[Custom Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/custom-component.md)에서는 DLR model을 이용하여 Component에서 추론(Inference)를 수행하는것을 설명합니다. 
 
 
+
+
+[RequiresPrivilege](https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html)
+
+(Optional) You can run the script with root privileges. If you set this option to true, then the AWS IoT Greengrass Core software runs this lifecycle script as root instead of as the system user that you configure to run this component. Defaults to false.
+
+
+
+
+[Custom Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/src)에서는 DLR model을 이용하여 Component에서 추론(Inference)를 수행하는것을 설명합니다. 
 
 ### Greengrass Commands와 Memo
 
