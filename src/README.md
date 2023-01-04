@@ -121,12 +121,14 @@ sudo tail -f /greengrass/v2/logs/com.custom.requester.log
 2023-01-04T12:44:51.225Z [INFO] (Copier) com.custom.requester: stdout. result: pelican. {scriptName=services.com.custom.requester.lifecycle.Run, serviceName=com.custom.requester, currentState=RUNNING}
 ```
 
-이때의 결과는 로그에서 아래처럼 확인할 수 있습니다. 
+실제 추론을 수행한 custom component인 "com.custom.ImageClassifier.log"은 로그는 아래와 같이 확인합니다. 
 
-실제 
+```java
+ sudo tail -f /greengrass/v2/logs/com.custom.ImageClassifier.log
+```
 
-```javaㅊ
-```j
+이때의 결과는 아래와 같이 "com.custom.requester"로 부터 요청을 받아서 추론을 통해 "pelican"이라는 결과를 전달하고 있습니다. 
+
 ```java
 2023-01-04T12:45:25.656Z [INFO] (Copier) com.custom.ImageClassifier: stdout. Received new message on topic local/inference: {"image_dir": "/greengrass/v2/packages/artifacts/com.custom.requester/1.0.0", "fname": "pelican.jpeg"}. {scriptName=services.com.custom.ImageClassifier.lifecycle.Run.Script, serviceName=com.custom.ImageClassifier, currentState=RUNNING}
 2023-01-04T12:45:26.110Z [INFO] (Copier) com.custom.ImageClassifier: stdout. result: pelican. 
@@ -134,12 +136,13 @@ sudo tail -f /greengrass/v2/logs/com.custom.requester.log
 
 ## 삭제
 
-
-배포에 사용했던 S3와 Recipe, Artifact의 삭제는 아래 명령어를 통해 삭제할 수 있습니다. 하지만 아래 명령어로 Device에 배포된 Component들이 삭제되지 않습니다. 디바이스의 Component들은 재배포시 해당 Component를 리스트에서 제외하고 배포하여야 삭제가 가능합니다.
+배포에 사용했던 S3의 Artifact와 IoT Greengrass에 있는 Component, Deployment는 아래 명령어를 통해 삭제할 수 있습니다. 
 
 ```java
 cdk destroy --all
 ```
+
+하지만 상기 명령어로 Device에 이미 배포된 Component들이 삭제되지 않습니다. 디바이스의 Component들은 Deployment에서 재배포시에 모든 Component를 리스트에서 제외하고 배포하여야 삭제가 가능합니다.
 
 
 
