@@ -127,11 +127,11 @@ sudo tail -f /greengrass/v2/logs/com.custom.requester.log
  sudo tail -f /greengrass/v2/logs/com.custom.ImageClassifier.log
 ```
 
-이때의 결과는 아래와 같이 "com.custom.requester"로 부터 요청을 받아서 추론을 통해 "pelican"이라는 결과를 전달하고 있습니다. 
+아래의 결과와 같이 "com.custom.requester"로 부터 요청을 받아서 추론을 통해 "pelican"이라는 결과를 얻고 있습니다. 
 
 ```java
-2023-01-04T12:45:25.656Z [INFO] (Copier) com.custom.ImageClassifier: stdout. Received new message on topic local/inference: {"image_dir": "/greengrass/v2/packages/artifacts/com.custom.requester/1.0.0", "fname": "pelican.jpeg"}. {scriptName=services.com.custom.ImageClassifier.lifecycle.Run.Script, serviceName=com.custom.ImageClassifier, currentState=RUNNING}
-2023-01-04T12:45:26.110Z [INFO] (Copier) com.custom.ImageClassifier: stdout. result: pelican. 
+2023-01-04T12:44:50.619Z [INFO] (Copier) com.custom.ImageClassifier: stdout. Received new message on topic local/inference: {"image_dir": "/greengrass/v2/packages/artifacts/com.custom.requester/1.0.0", "fname": "pelican.jpeg"}. {scriptName=services.com.custom.ImageClassifier.lifecycle.Run.Script, serviceName=com.custom.ImageClassifier, currentState=RUNNING}
+2023-01-04T12:44:51.223Z [INFO] (Copier) com.custom.ImageClassifier: stdout. result: pelican. {scriptName=services.com.custom.ImageClassifier.lifecycle.Run.Script, serviceName=com.custom.ImageClassifier, currentState=RUNNING}
 ```
 
 ## 삭제
