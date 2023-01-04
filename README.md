@@ -192,7 +192,7 @@ def predict_from_image(model, image_data):
       }
 ```
 
-### CDK를 이용한 Component 배포
+### CDK를 이용한 Component 배포 준지
 
 CDK를 이용하여 Component를 배포합니다. 
 
