@@ -181,21 +181,52 @@ def predict_from_image(model, image_data):
 }
 ```
 
+또한, 추론을 위한 라이브러리에 의존성(dependency)가 있으므로 아래와 같이 "ComponentDependencies"에서 "variant.DLR.ImageClassification.ModelStore"를 기술하여야 합니다. 
+
+```java
+      "ComponentDependencies": {
+        "variant.DLR.ImageClassification.ModelStore": {
+          "VersionRequirement": ">=2.1.0 <2.2.0",
+          "DependencyType": "HARD"
+        }
+      }
+```
+
 ### CDK를 이용한 Component 배포
 
+CDK를 이용하여 Component를 배포합니다. 
+
+[cdk-greengrass-stack.ts](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/cdk-greengrass/lib/cdk-greengrass-stack.ts)에서는 s3 bucket을 생성하고, artifact를 복사한후 deployment를 이용해 배포합니다. 
 
 
+```java
+const s3Bucket = new s3.Bucket(this, "gg-depolyment-storage",{
+  blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+  removalPolicy: cdk.RemovalPolicy.DESTROY,
+  autoDeleteObjects: true,
+  publicReadAccess: false,
+});
 
+// copy artifact into s3 bucket
+new s3Deploy.BucketDeployment(this, "UploadArtifact", {
+  sources: [s3Deploy.Source.asset("../src")],
+  destinationBucket: s3Bucket,
+}); 
 
-
-
-
-
-
-[RequiresPrivilege](https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html)
-
-(Optional) You can run the script with root privileges. If you set this option to true, then the AWS IoT Greengrass Core software runs this lifecycle script as root instead of as the system user that you configure to run this component. Defaults to false.
-
+new greengrassv2.CfnDeployment(this, 'MyCfnDeployment', {
+  targetArn: `arn:aws:iot:ap-northeast-2:`+accountId+`:thing/`+deviceName,    
+  components: {
+    "com.custom.requester": {
+      componentVersion: version_requester
+    },
+    "com.custom.ImageClassifier": {
+      componentVersion: version_ImageClassifier
+    },
+    "aws.greengrass.Cli": {
+      componentVersion: "2.9.2"
+    }
+  }
+```
 
 
 ### 배포하기 
