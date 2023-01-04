@@ -12,11 +12,14 @@ Cloud9은 브라우저만으로 코드를 작성, 실행 및 디버깅할 수 �
 
 ![noname](https://user-images.githubusercontent.com/52392004/204112727-f14df4fc-830f-4c58-b229-8adda848a7c0.png)
 
-[Instance type]은 어떤 type이라도 관련없으나 여기서는 편의상 m5.large를 선택하였습니다. Platform은 "Ubuntu Server 18.04 LTS"을 선택합니다. 
+Platform은 "Ubuntu Server 18.04 LTS"을 선택합니다. 
 
-![noname](https://user-images.githubusercontent.com/52392004/204112516-ebd04eb3-e1a5-4a87-8bab-8782ecd511ae.png)
+![noname](https://user-images.githubusercontent.com/52392004/210555080-8a171197-9428-434d-b75d-58af38994334.png)
+
 
 아래로 이동하여 [Create]를 선택하면 수분후에 Cloud9이 생성됩니다.
+
+
 
 ## 2) Greengrass 설치하기 
 
@@ -29,8 +32,7 @@ Cloud9을 오픈하고 터미널을 실행합니다.
 아래와 같이 Greengrass를 다운로드 합니다. 
 
 ```java
-curl -s https://d2s8p88vqu9w66.cloudfront.net/releases/greengrass-nucleus-latest.zip > greengrass-nucleus-latest.zip
-unzip greengrass-nucleus-latest.zip -d GreengrassCore
+curl -s https://d2s8p88vqu9w66.cloudfront.net/releases/greengrass-nucleus-latest.zip > greengrass-nucleus-latest.zip && unzip greengrass-nucleus-latest.zip -d GreengrassCore
 ```
 
 ### Greengrass 설치 
@@ -66,7 +68,7 @@ sudo -E java -Droot="/greengrass/v2" -Dlog.store=FILE -jar ./GreengrassCore/lib/
 아래와 같이 github의 코드를 다운로드 합니다. 
 
 ```java
-https://github.com/kyopark2014/image-classification-via-iot-greengrass
+git clone https://github.com/kyopark2014/image-classification-via-iot-greengrass
 ```
 
 cdk 폴더로 이동하여 필요한 라이브러리를 설치합니다. "aws-cdk-lib"는 CDK V2이고, "Path"는 Docker image 생성시 필요한 라이브러리입니다. 
@@ -88,45 +90,46 @@ cdk deploy --all
 
 [Greengrass Console - Components](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/greengrass/v2/components)에서 아래와 같이 생성된 component 정보를 확인합니다. 
 
-![image](https://user-images.githubusercontent.com/52392004/204181933-402f5f40-7048-4e3f-9d9e-120e1a0a42a2.png)
+![image](https://user-images.githubusercontent.com/52392004/210557261-5570543d-ffcc-42ea-85f4-468f115b735a.png)
 
 
 [Greengrass Console - Deployment](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/greengrass/v2/deployments)에서 아래와 같이 배포상태를 확인합니다. 아래와 같이 Status가 "Completed"가 되어야 합니다. 
 
-![image](https://user-images.githubusercontent.com/52392004/204182044-8a55bae4-c5fc-49ee-9d98-d6b9006610b3.png)
+![image](https://user-images.githubusercontent.com/52392004/210557345-00686e44-d7fd-4670-9498-5b0f6a49cbf2.png)
 
 
-아래와 같이 Inference API를 호출하는 local component인 "com.ml.consumer"의 로그를 확인합니다.
+아래와 같이 Inference API를 호출하는 local component인 "com.custom.requester"의 로그를 확인합니다.
 ```java
-sudo tail -f /greengrass/v2/logs/com.ml.consumer.log
+sudo tail -f /greengrass/v2/logs/com.custom.requester.log
 ```
 
-로그에서 요청은 아래와 같습니다. 
+로그에서 요청은 아래와 같이 "pelican.jpeg"를 입력으로 넣습니다. 
 
 ```java
-2022-11-28T03:00:34.872Z [INFO] (Copier) com.ml.consumer: stdout. request: {"body": "[{\"fixed acidity\":6.6,\"volatile acidity\":0.24,\"citric acid\":0.28,\"residual sugar\":1.8,\"chlorides\":0.028,\"free sulfur dioxide\":39,\"total sulfur dioxide\":132,\"density\":0.99182,\"pH\":3.34,\"sulphates\":0.46,\"alcohol\":11.4,\"color_red\":0,\"color_white\":1},{\"fixed acidity\":8.7,\"volatile acidity\":0.78,\"citric acid\":0.51,\"residual sugar\":1.7,\"chlorides\":0.415,\"free sulfur dioxide\":12,\"total sulfur dioxide\":66,\"density\":0.99623,\"pH\":3.0,\"sulphates\":1.17,\"alcohol\":9.2,\"color_red\":1,\"color_white\":0}]", "isBase64Encoded": false}. {scriptName=services.com.ml.consumer.lifecycle.Run, serviceName=com.ml.consumer, currentState=RUNNING}
+{"image_dir": "/greengrass/v2/packages/artifacts/com.custom.requester/1.0.0", "fname": "pelican.jpeg"}
+```
+
+이때의 결과는 아래와 같이 "pelican"으로 정상적으로 분류가 되었습니다.
+
+```java
+2023-01-04T12:44:00.207Z [INFO] (Copier) com.custom.requester: stdout. Installing collected packages: awscrt, awsiotsdk. {scriptName=services.com.custom.requester.lifecycle.Install, serviceName=com.custom.requester, currentState=NEW}
+2023-01-04T12:44:00.351Z [INFO] (Copier) com.custom.requester: stdout. Successfully installed awscrt-0.14.7 awsiotsdk-1.11.9. {scriptName=services.com.custom.requester.lifecycle.Install, serviceName=com.custom.requester, currentState=NEW}
+2023-01-04T12:44:00.424Z [INFO] (pool-2-thread-25) com.custom.requester: shell-runner-start. {scriptName=services.com.custom.requester.lifecycle.Run, serviceName=com.custom.requester, currentState=STARTING, command=["python3 -u /greengrass/v2/packages/artifacts/com.custom.requester/1.0.0/reques..."]}
+2023-01-04T12:44:00.532Z [INFO] (Copier) com.custom.requester: stdout. BASE_DIR =  /greengrass/v2/packages/artifacts/com.custom.requester/1.0.0. {scriptName=services.com.custom.requester.lifecycle.Run, serviceName=com.custom.requester, currentState=RUNNING}
+2023-01-04T12:44:00.550Z [INFO] (Copier) com.custom.requester: stdout. Successfully subscribed to topic: local/result. {scriptName=services.com.custom.requester.lifecycle.Run, serviceName=com.custom.requester, currentState=RUNNING}
+2023-01-04T12:44:50.618Z [INFO] (Copier) com.custom.requester: stdout. request: {"image_dir": "/greengrass/v2/packages/artifacts/com.custom.requester/1.0.0", "fname": "pelican.jpeg"}. {scriptName=services.com.custom.requester.lifecycle.Run, serviceName=com.custom.requester, currentState=RUNNING}
+2023-01-04T12:44:51.225Z [INFO] (Copier) com.custom.requester: stdout. result: pelican. {scriptName=services.com.custom.requester.lifecycle.Run, serviceName=com.custom.requester, currentState=RUNNING}
 ```
 
 이때의 결과는 로그에서 아래처럼 확인할 수 있습니다. 
-```java
-2022-11-28T03:00:34.896Z [INFO] (Copier) com.ml.consumer: stdout. result: [6.573914051055908, 4.869720935821533]. {scriptName=services.com.ml.consumer.lifecycle.Run, serviceName=com.ml.consumer, currentState=RUNNING}
-```
 
-container component인 "com.ml.xgboost"의 로그는 아래와 같습니다. 
+실제 
 
+```javaㅊ
+```j
 ```java
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. Received new message on topic local/inference: {"body": "[{\"fixed acidity\":6.6,\"volatile acidity\":0.24,\"citric acid\":0.28,\"residual sugar\":1.8,\"chlorides\":0.028,\"free sulfur dioxide\":39,\"total sulfur dioxide\":132,\"density\":0.99182,\"pH\":3.34,\"sulphates\":0.46,\"alcohol\":11.4,\"color_red\":0,\"color_white\":1},{\"fixed acidity\":8.7,\"volatile acidity\":0.78,\"citric acid\":0.51,\"residual sugar\":1.7,\"chlorides\":0.415,\"free sulfur dioxide\":12,\"total sulfur dioxide\":66,\"density\":0.99623,\"pH\":3.0,\"sulphates\":1.17,\"alcohol\":9.2,\"color_red\":1,\"color_white\":0}]", "isBase64Encoded": false}. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. event:  {'body': '[{"fixed acidity":6.6,"volatile acidity":0.24,"citric acid":0.28,"residual sugar":1.8,"chlorides":0.028,"free sulfur dioxide":39,"total sulfur dioxide":132,"density":0.99182,"pH":3.34,"sulphates":0.46,"alcohol":11.4,"color_red":0,"color_white":1},{"fixed acidity":8.7,"volatile acidity":0.78,"citric acid":0.51,"residual sugar":1.7,"chlorides":0.415,"free sulfur dioxide":12,"total sulfur dioxide":66,"density":0.99623,"pH":3.0,"sulphates":1.17,"alcohol":9.2,"color_red":1,"color_white":0}]', 'isBase64Encoded': False}. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. isBase64Encoded:  False. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. Base64 decoding is not required. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. body:  [{"fixed acidity":6.6,"volatile acidity":0.24,"citric acid":0.28,"residual sugar":1.8,"chlorides":0.028,"free sulfur dioxide":39,"total sulfur dioxide":132,"density":0.99182,"pH":3.34,"sulphates":0.46,"alcohol":11.4,"color_red":0,"color_white":1},{"fixed acidity":8.7,"volatile acidity":0.78,"citric acid":0.51,"residual sugar":1.7,"chlorides":0.415,"free sulfur dioxide":12,"total sulfur dioxide":66,"density":0.99623,"pH":3.0,"sulphates":1.17,"alcohol":9.2,"color_red":1,"color_white":0}]. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. values:     fixed acidity  volatile acidity  ...  color_red  color_white. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. 0            6.6              0.24  ...          0            1. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. 1            8.7              0.78  ...          1            0. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. [2 rows x 13 columns]. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. result: [6.573914 4.869721]. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
-2022-11-28T03:07:05.358Z [INFO] (Copier) com.ml.xgboost: stdout. result: [6.573914051055908, 4.869720935821533]. {scriptName=services.com.ml.xgboost.lifecycle.Run, serviceName=com.ml.xgboost, currentState=RUNNING}
+2023-01-04T12:45:25.656Z [INFO] (Copier) com.custom.ImageClassifier: stdout. Received new message on topic local/inference: {"image_dir": "/greengrass/v2/packages/artifacts/com.custom.requester/1.0.0", "fname": "pelican.jpeg"}. {scriptName=services.com.custom.ImageClassifier.lifecycle.Run.Script, serviceName=com.custom.ImageClassifier, currentState=RUNNING}
+2023-01-04T12:45:26.110Z [INFO] (Copier) com.custom.ImageClassifier: stdout. result: pelican. 
 ```
 
 ## 삭제
