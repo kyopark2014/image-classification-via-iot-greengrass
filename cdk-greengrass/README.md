@@ -4,55 +4,59 @@ CDK를 이용하여 Greengrass 디바이스에 배포합니다.
 
 ## 배포를 위한 S3 생성 및 파일 복사 
 
+
 ```java
+    // s3 deployment
     const s3Bucket = new s3.Bucket(this, "gg-depolyment-storage",{
-      bucketName: "gg-depolyment-storage",
+      // bucketName: bucketName,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       publicReadAccess: false,
       versioned: false,
     });
-    
-    // copy web application files into s3 bucket
+
+    // copy artifact into s3 bucket
     new s3Deploy.BucketDeployment(this, "UploadArtifact", {
       sources: [s3Deploy.Source.asset("../src")],
       destinationBucket: s3Bucket,
-    });
+    }); 
 ```    
 
-## Component 배포하기
+## Component 하기
 
 S3 생성 및 파일복사하는 시간동안에 배포가 이루어지면 안되므로, 아래와 같이 멀티 스택으로 구현합니다. 
 
 ```java
-// deploy components
-new componentDeployment(scope, "component", s3Bucket.bucketName, accountId, deviceName)    
-
-```java
-export class componentDeployment extends cdk.Stack {
-  constructor(scope: Construct, id: string, bucketName: string, accountId: string, deviceName: string, props?: cdk.StackProps) {    
+// components deployment
+const version_requester = "1.0.0", version_ImageClassifier = "1.0.0"
+const component = new customComponent(scope, "component", s3Bucket.bucketName, version_requester, version_ImageClassifier)    
+    
+    
+export class customComponent extends cdk.Stack {
+  constructor(scope: Construct, id: string, bucketName: string, version_requester: string, version_ImageClassifier: string, props?: cdk.StackProps) {    
     super(scope, id, props);
 
-    // recipe of component - com.example.publisher
-    const version = "1.0.0"
-    const recipe_publisher = `{
+    // recipe of component - com.custom.requester
+    const recipe_requester = `{
       "RecipeFormatVersion": "2020-01-25",
-      "ComponentName": "com.example.publisher",
-      "ComponentVersion": "${version}",
-      "ComponentDescription": "A component that publishes messages.",
+      "ComponentName": "com.custom.requester",
+      "ComponentVersion": "${version_requester}",
+      "ComponentDescription": "A component that requests the image classification.",
       "ComponentPublisher": "Amazon",
       "ComponentConfiguration": {
         "DefaultConfiguration": {
           "accessControl": {
             "aws.greengrass.ipc.pubsub": {
-              "com.example.publisher:pubsub:1": {
-                "policyDescription": "Allows access to publish to all topics.",
+              "com.custom.requester:pubsub:1": {
+                "policyDescription": "Allows access to publish/subscribe to the topics.",
                 "operations": [
-                  "aws.greengrass#PublishToTopic"
+                  "aws.greengrass#PublishToTopic",
+                  "aws.greengrass#SubscribeToTopic"  
                 ],
                 "resources": [
-                  "*"
+                  "local/inference",
+                  "local/result"
                 ]
               }
             }
@@ -65,40 +69,58 @@ export class componentDeployment extends cdk.Stack {
         },
         "Lifecycle": {
           "Install": "pip3 install awsiotsdk",
-          "Run": "python3 -u {artifacts:path}/publisher.py"
+          "Run": "python3 -u {artifacts:path}/requester.py"
         },
-        "Artifacts": [{
-          "URI": "${'s3://'+bucketName}/publisher/artifacts/com.example.publisher/1.0.0/publisher.py"
-        }]
+        "Artifacts": [
+          {
+            "URI": "${'s3://'+bucketName}/requester/artifacts/com.custom.requester/1.0.0/requester.py"
+          },
+          {
+            "URI": "${'s3://'+bucketName}/requester/artifacts/com.custom.requester/1.0.0/pelican.jpeg"
+          }
+        ]
       }]
     }`
 
-    // recipe of component - com.example.publisher
-    new greengrassv2.CfnComponentVersion(this, 'MyCfnComponentVersion-Publisher', {
-      inlineRecipe: recipe_publisher,
+    const cfnComponentVersion1 = new greengrassv2.CfnComponentVersion(this, 'MyCfnComponentVersion-requester', {
+      inlineRecipe: recipe_requester,
     });
+
+    new cdk.CfnOutput(this, 'componentName1', {
+      value: cfnComponentVersion1.attrComponentName,
+      description: 'The nmae of component',
+    });  
     
-    const recipe_subscriber = `{
+    // recipe of component - com.custom.ImageClassifier
+    const recipe_ImageClassifier = `{
       "RecipeFormatVersion": "2020-01-25",
-      "ComponentName": "com.example.subscriber",
-      "ComponentVersion": "${version}",
-      "ComponentDescription": "A component that subscribes messages.",
+      "ComponentName": "com.custom.ImageClassifier",
+      "ComponentVersion": "${version_ImageClassifier}",
+      "ComponentDescription": "A component that subscribe a topic from requester.",
       "ComponentPublisher": "Amazon",
       "ComponentConfiguration": {
         "DefaultConfiguration": {
           "accessControl": {
             "aws.greengrass.ipc.pubsub": {
-              "com.example.subscriber:pubsub:1": {
-                "policyDescription": "Allows access to subscribe to all topics.",
+              "com.custom.ImageClassifier:pubsub:1": {
+                "policyDescription": "Allows access to subscribe/subscribe to the topics.",
                 "operations": [
-                  "aws.greengrass#SubscribeToTopic"
+                  "aws.greengrass#PublishToTopic",
+                  "aws.greengrass#SubscribeToTopic"     
                 ],
                 "resources": [
-                  "*"
+                  "local/inference",
+                  "local/result"
                 ]
               }
             }
           }
+        }
+      },
+      "ComponentDependencies": {
+        "variant.DLR.ImageClassification.ModelStore": {
+          "VersionRequirement": ">=2.1.0 <2.2.0",
+          "DependencyType": "HARD"
         }
       },
       "Manifests": [{
@@ -106,39 +128,67 @@ export class componentDeployment extends cdk.Stack {
           "os": "linux"
         },
         "Lifecycle": {
-          "Install": "pip3 install awsiotsdk",
-          "Run": "python3 -u {artifacts:path}/subscriber.py"
+          "Install": {
+            "RequiresPrivilege": "true",
+            "Script": "apt-get install libgl1 -y\\n pip3 install --upgrade pip\\n pip3 install scikit-build wheel opencv-python==4.6.0.66 dlr\\n python -m pip install dlr\\n pip3 install awsiotsdk"
+          },
+          "Run": {
+            "RequiresPrivilege": "true",
+            "Script": "python3 -u {artifacts:path}/interface.py"
+          }
         },
-        "Artifacts": [{
-          "URI": "${'s3://'+bucketName}/subscriber/artifacts/com.example.subscriber/1.0.0/subscriber.py"
-        }]
+        "Artifacts": [
+          {
+            "URI": "${'s3://'+bucketName}/classifier/artifacts/com.custom.ImageClassifier/1.0.0/classifier.py"
+          },
+          {
+            "URI": "${'s3://'+bucketName}/classifier/artifacts/com.custom.ImageClassifier/1.0.0/inference.py"
+          },
+          {
+            "URI": "${'s3://'+bucketName}/classifier/artifacts/com.custom.ImageClassifier/1.0.0/interface.py"
+          }
+        ]
       }]
     }`
 
-    const cfnComponentVersion2 = new greengrassv2.CfnComponentVersion(this, 'MyCfnComponentVersion_Subscriber', {
-      inlineRecipe: recipe_subscriber,
+    const cfnComponentVersion2 = new greengrassv2.CfnComponentVersion(this, 'MyCfnComponentVersion_ImageClassifier', {
+      inlineRecipe: recipe_ImageClassifier,
     });
 
-    new cdk.CfnOutput(this, 'componentName', {
+    new cdk.CfnOutput(this, 'componentName2', {
       value: cfnComponentVersion2.attrComponentName,
       description: 'The nmae of component',
-    });
-    
-    // deployments
+    });     
+  }
+}
+```
+
+## Component 배포하기
+
+```java
+// deploy components
+const deployment = new componentDeployment(scope, "deployments", version_requester, version_ImageClassifier, accountId, deviceName)   
+deployment.addDependency(component); 
+
+export class componentDeployment extends cdk.Stack {
+  constructor(scope: Construct, id: string, version_requester: string, version_ImageClassifier: string, accountId: string, deviceName: string, props?: cdk.StackProps) {    
+    super(scope, id, props);
+
+        // deployments
     const cfnDeployment = new greengrassv2.CfnDeployment(this, 'MyCfnDeployment', {
       targetArn: `arn:aws:iot:ap-northeast-2:`+accountId+`:thing/`+deviceName,    
       components: {
-        "com.example.publisher": {
-          componentVersion: version, 
+        "com.custom.requester": {
+          componentVersion: version_requester
         },
-        "com.example.subscriber": {
-          componentVersion: version, 
+        "com.custom.ImageClassifier": {
+          componentVersion: version_ImageClassifier
         },
         "aws.greengrass.Cli": {
-          componentVersion: "2.8.1", 
+          componentVersion: "2.9.2"
         }
       },
-      deploymentName: 'deployment-local-pubsub',
+      deploymentName: 'deployment-ImageClassification',
       deploymentPolicies: {
         componentUpdatePolicy: {
           action: 'NOTIFY_COMPONENTS', // NOTIFY_COMPONENTS | SKIP_NOTIFY_COMPONENTS
