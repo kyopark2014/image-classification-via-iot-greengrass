@@ -1,26 +1,31 @@
 # IoT 디바이스에서 머신러닝을 이용한 이미지 분류하기
 
-IoT 디바이스에서 이미지 분류를 위한 머신러닝을 활용하기 위해서는 효과적인 머신러닝 모델이 필요합니다. AWS에서 무료로 제공하는 [DLR 이미지 분류 모델 스토어](https://docs.aws.amazon.com/ko_kr/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)를 이용하여, Greengrass가 설치된 디바이스에서 [ResNet-50 모델](https://viso.ai/deep-learning/resnet-residual-neural-network/)을 사용할 수 있습니다. DLR 이미지 분류 모델은 Built-in Component인 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)로 제공되며, 이것을 IoT device에서 활용하기 위해서는 마차간지로 Built-in Component인 [aws.greengrass.DLRImageClassification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)을 이용하여 이미지 분류를 요청하거나 별도의 Custom Component를 생성할 수 있어야 합니다. 
+IoT 디바이스에서 이미지 분류를 위한 머신러닝을 활용하기 위해서는 효과적인 머신러닝 모델이 필요합니다. AWS에서 무료로 제공하는 [DLR 이미지 분류 모델 스토어](https://docs.aws.amazon.com/ko_kr/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)를 이용하여, Greengrass가 설치된 디바이스에서 [ResNet-50 모델](https://viso.ai/deep-learning/resnet-residual-neural-network/)을 사용할 수 있습니다. DLR 이미지 분류 모델은 Built-in Component인 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)로 제공되며, 이것을 IoT device에서 활용하기 위해서는 마찬가지로 Built-in Component인 [aws.greengrass.DLRImageClassification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)을 이용하여 이미지 분류를 요청하거나 별도의 Custom Component를 생성할 수 있어야 합니다. 
 
 
 ## Built-in Component를 이용하는 방법
 
-[DLR image classification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)은 AWS에서 제공하는 public component로서 오픈 소스 프로젝트인 [DLR (Deep Learning Runtime)](https://github.com/neo-ai/neo-ai-dlr)을 베이스로 IoT 디바이스에서 이미지 분류를 추론(Inference)할 수 있도록 해줍니다. 
+[aws.greengrass.DLRImageClassification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)은 AWS에서 제공하는 public component로서 오픈 소스 프로젝트인 [DLR (Deep Learning Runtime)](https://github.com/neo-ai/neo-ai-dlr)을 베이스로 IoT 디바이스에서 이미지 분류를 추론(Inference)할 수 있도록 해줍니다. 
 
-[Built-in Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/built-in-component.md)에서는 public component인 aws.greengrass.DLRImageClassification을 설치하고 사용하는 방법에 대해 설명하고 있습니다. 
+[Built-in Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/built-in-component.md)에서는 DLR model을 설치하고, 활용하는 방법에 대해 설명하고 있습니다. 
 
-사용자의 특정 목적에 따라 이미지 분류를 하려면, public component으로 어렵고, 아래와 같이 custom component를 생성하여 사용하여야 합니다. 
+하지만, public component로 제공하는 사용자의 목적에 따라 수정이 어렵고 아래와 같이 일부 항목에 대해서만 설정이 가능합니다. 특히, RESTful API처럼 Greengrass의 다른 Component에서 aws.greengrass.DLRImageClassification에 요청을 보내는 방식이 아니라 일정 주기(InferenceInterval)로 특정 폴더(ImageDirectory)에 특정 이름(ImageName)을 가진 파일을 복사하는 방식입니다.
 
+```java
+{
+  "InferenceInterval": "60",
+  "ImageDirectory": "/tmp/images/",
+  "ImageName": "image.jpg"
+}
+```
 
+따라서, custom component에서 DLR model(aws.greengrass.DLRImageClassification)을 불러올수 있다면, 이미지 분류 모델을 유용하게 활용할 수 있습니다. 이와 같이 [IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 DLR model을 이용하여, IoT 디바이스에서 이미지 분류(Image Classification)를 쉽고 편리하게 이용하고자 합니다. 
 
 
 ## Custom Component로 이용하는 방법
 
-여기서는 [IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 DLR model을 이용하여, IoT 디바이스에서 이미지 분류(Image Classification)를 쉽고 편리하게 이용하고자 합니다. 
+Edge에 있는 IoT 디바이스에서 이미지 분류 추론을 수행하는 과정을 아래 Architecture에서 설명하고 있습니다. IoT 디바이스에 Greengrass를 설치하면 AWS Cloud의 Greengrass를 이용하여 디바이스의 Component를 배포하거나 관리할 수 있습니다. IoT 디바이스에는 이미지 분류를 요청하는 requester(com.custom.requester)와 추론을 수행하는 classifier(com.custom.ImageClassifer)가 있습니다. 두 Compoent는 Nucleus를 통해 서로 IPC 통신을 수행할 수 있습니다. 실제로 이미지 분류 추론을 수행하는 Inference modeule은 아래와 같이 Classifer와 DLR model(variant.DLR.ImageClassification.ModelStore)로 구성됩니다. 여기서, Requester는 "local/result" topic을 Subscribe 하여 결과를 얻고, Classifier는 "local/inference" toipc을 subscribe하여서 requester의 요청을 받아 들입니다. 
 
-
-
-아래 그림은 edge에 있는 IoT 디바이스에서 이미지 분류 추론을 수행하는 과정을 Architecture로 설명하고 있습니다. IoT 디바이스에 Greengrass를 설치하면 AWS Cloud의 Greengrass를 이용하여 디바이스의 Component를 배포하거나 관리할 수 있습니다. IoT 디바이스에는 이미지 분류를 요청하는 requester(com.custom.requester)와 추론을 수행하는 classifier(com.custom.ImageClassifer)가 있습니다. 두 Compoent는 Nucleus를 통해 서로 IPC 통신을 수행할 수 있습니다. 실제로 이미지 분류 추론을 수행하는 Inference modeule은 아래와 같이 Classifer와 DLR model(variant.DLR.ImageClassification.ModelStore)로 구성됩니다. 여기서, Requester는 "local/result" topic을 Subscribe 하여 결과를 얻고, Classifier는 "local/inference" toipc을 subscribe하여서 requester의 요청을 받아 들입니다. 
 
 <img src="https://user-images.githubusercontent.com/52392004/210805939-c5575298-e0fb-43c5-b934-81f7744227dd.png" width="800">
 
