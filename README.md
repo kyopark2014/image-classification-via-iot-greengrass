@@ -9,7 +9,7 @@ IoT 디바이스에서 이미지 분류를 위한 머신러닝을 활용하기 �
 
 [Built-in Component](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/built-in-component.md)에서는 DLR model을 설치하고, 활용하는 방법에 대해 설명하고 있습니다. 
 
-하지만, public component로 제공하는 사용자의 목적에 따라 수정이 어렵고 아래와 같이 일부 항목에 대해서만 설정이 가능합니다. 특히, RESTful API처럼 Greengrass의 다른 Component에서 aws.greengrass.DLRImageClassification에 요청을 보내는 방식이 아니라 일정 주기(InferenceInterval)로 특정 폴더(ImageDirectory)에 특정 이름(ImageName)을 가진 파일을 복사하는 방식입니다.
+하지만, public component로 제공하는 aws.greengrass.DLRImageClassification는 사용자의 목적에 따라 수정이 어렵고 아래와 같이 일부 항목에 대해서만 설정이 가능합니다. 특히, RESTful API처럼 Greengrass의 다른 Component에서 aws.greengrass.DLRImageClassification에 요청을 보내는 방식이 아니라 일정 주기(InferenceInterval)로 특정 폴더(ImageDirectory)에 특정 이름(ImageName)을 가진 파일을 복사하는 방식입니다.
 
 ```java
 {
