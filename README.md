@@ -6,7 +6,7 @@ IoT 디바이스에서 이미지 분류를 위한 머신러닝을 활용하기 �
 
 DLR model을 활용하기 위해서 Built-in Component인 [DLR image classification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)을 제공하고 있습니다. 이것은 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)을 이용하여, 이미지 분류를 위한 머신러닝을 수행합니다.
 
-<img src="https://user-images.githubusercontent.com/52392004/210805575-e52d6f3d-d3ac-4fcb-ad63-af382fa18b57.png" width="700">
+<img src="https://user-images.githubusercontent.com/52392004/210805575-e52d6f3d-d3ac-4fcb-ad63-af382fa18b57.png" width="800">
 
 ## Built-in Component를 이용하는 방법
 
