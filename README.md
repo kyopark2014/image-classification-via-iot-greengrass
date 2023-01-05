@@ -19,7 +19,7 @@ IoT 디바이스에서 이미지 분류를 위한 머신러닝을 활용하기 �
 }
 ```
 
-따라서, custom component에서 DLR model(aws.greengrass.DLRImageClassification)을 불러올수 있다면, 이미지 분류 모델을 유용하게 활용할 수 있습니다. 이와 같이 [IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 DLR model을 이용하여, IoT 디바이스에서 이미지 분류(Image Classification)를 쉽고 편리하게 이용하고자 합니다. 
+따라서, DLR model(aws.greengrass.DLRImageClassification)로 이미지 분류를 수행하는 comstom component가 필요합니다. 이와 같이 [IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 DLR model을 이용하여, IoT 디바이스에서 이미지 분류(Image Classification)를 쉽고 편리하게 이용하고자 합니다. 
 
 
 ## Custom Component로 이용하는 방법
