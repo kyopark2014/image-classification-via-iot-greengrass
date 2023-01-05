@@ -82,7 +82,7 @@ cdk deploy --all
 ```
 
 
-## 배포 결과 확인
+## 4) 배포 결과 확인
 
 [Greengrass Console - Components](https://ap-northeast-2.console.aws.amazon.com/iot/home?region=ap-northeast-2#/greengrass/v2/components)에서 아래와 같이 생성된 component 정보를 확인합니다. 
 
@@ -130,7 +130,7 @@ sudo tail -f /greengrass/v2/logs/com.custom.requester.log
 2023-01-04T12:44:51.223Z [INFO] (Copier) com.custom.ImageClassifier: stdout. result: pelican. {scriptName=services.com.custom.ImageClassifier.lifecycle.Run.Script, serviceName=com.custom.ImageClassifier, currentState=RUNNING}
 ```
 
-## 삭제
+## 5) 삭제
 
 배포에 사용했던 S3의 Artifact와 IoT Greengrass에 있는 Component, Deployment는 아래 명령어를 통해 삭제할 수 있습니다. 
 
