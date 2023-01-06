@@ -41,7 +41,7 @@ Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 
 
 4) Classifier는 DLR model로 추론(inference)을 수행합니다. 
 
-5) 이미지 분류 수행 결과를 Classifier에 전달합니다. 
+5) DLR model은 이미지 분류 추론 결과를 Classifier에 전달합니다. 
 
 6) Classifier는 "local/result" topic으로 결과를 전달합니다.
 
