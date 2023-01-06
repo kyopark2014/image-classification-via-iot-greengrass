@@ -39,13 +39,13 @@ Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 
 
 3) Classifier는 "local/inference"를 Subscribe하고 있다가, Requester가 보낸 이미지 분류 추론 요청을 받습니다.
 
-4) Classifier는 DLR model로 추론(inference)을 수행합니다. 
+4) Classifier는 variant.DLR.ImageClassification.ModelStore의 DLR model을 이용하여 추론(inference)을 수행합니다. 
 
-5) DLR model은 이미지 분류 추론 결과를 Classifier에 전달합니다. 
+5) DLR model은 이미지 분류 추론 결과를 Classifier에 리턴합니다. 
 
-6) Classifier는 "local/result" topic으로 결과를 전달합니다.
+6) Classifier는 "local/result" topic으로 결과를 publish합니다.
 
-7) Requester는 "local/result" topic을 활용하여 이미지 분류 결과를 확인합니다. 
+7) Requester는 "local/result" topic으로 부터 이미지 분류 결과를 확인합니다. 
 
 
 
