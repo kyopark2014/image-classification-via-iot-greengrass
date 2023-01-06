@@ -18,12 +18,12 @@ Public component인 aws.greengrass.DLRImageClassification을 이용하면, IoT �
 }
 ```
 
-또한, RESTful API처럼 Greengrass의 다른 Component에서 aws.greengrass.DLRImageClassification에 직접 요청을 보내고 결과를 얻는 방식이 아니라, IoT Core를 통해 결과를 확인하여야 합니다. 따라서, IoT 디바이스 만으로 로컬 컴포넌트에서 이미지 분류를 구현하고자 한다면 Custom Component에서 직접 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)의 DLR model을 로딩하여 활용할 수 있어야 합니다. 아래에서는 Custom component를 이용하여 variant.DLR.ImageClassification.ModelStore의 DLR model을 로드하고, 이미지 분류(Image Classification)를 쉽고 편리하게 수행하는것을 설명합니다. 
+또한, RESTful API처럼 Greengrass의 다른 Component에서 aws.greengrass.DLRImageClassification에 직접 요청을 보내고 결과를 얻는 방식이 아니라, IoT Core를 통해 결과를 확인하여야 합니다. 따라서, off-line 같은 상황도 고려하여 IoT 디바이스에서 이미지 분류를 구현하고자 한다면 Custom Component에서 직접 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)의 DLR model을 로딩하여 활용할 수 있어야 합니다. 아래에서는 Custom component를 이용하여 variant.DLR.ImageClassification.ModelStore의 DLR model을 로드하고, 이미지 분류(Image Classification)를 쉽고 편리하게 수행하는것을 설명합니다. 
 
 
 ## Custom Component를 이용한 이미지 분류 
 
-Edge에 있는 IoT 디바이스에서 이미지 분류를 수행하는 과정을 아래 Architecture에서 설명하고 있습니다. AWS Cloud의 Greengrass를 이용하여 디바이스에 Component를 배포하거나 관리할 수 있습니다. IoT 디바이스에 이미지 분류를 요청하는 component인 requester(com.custom.requester)와 추론을 수행하는 component인 classifier(com.custom.ImageClassifer)를 구현합니다. 두 Compoent는 [Nucleus](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html)를 통해 [IPC 통신](https://docs.aws.amazon.com/greengrass/v2/developerguide/interprocess-communication.html)을 수행합니다. 실제로 이미지 분류 추론을 수행하는 Inference modeule은 아래와 같이 Classifer와 DLR model(variant.DLR.ImageClassification.ModelStore)로 구성됩니다. 여기서, Requester는 "local/result" topic을 Subscribe 하여 결과를 얻고, Classifier는 "local/inference" toipc을 subscribe하여서 requester의 요청을 받아 들입니다. 
+Edge에 있는 IoT 디바이스에서 이미지 분류를 수행하는 과정을 아래 Architecture에서 설명하고 있습니다. AWS Cloud의 Greengrass를 이용하여 디바이스에 Component를 배포하거나 관리할 수 있습니다. IoT 디바이스에는 이미지 분류를 요청하는 component인 Requester(com.custom.requester), 추론을 수행하는 component인 Classifier(com.custom.ImageClassifer), DLR model(variant.DLR.ImageClassification.ModelStore)이 있습니다. Requester와 Classifer는 [Nucleus](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html)를 통해 [IPC 통신](https://docs.aws.amazon.com/greengrass/v2/developerguide/interprocess-communication.html)을 수행합니다. 이미지 분류 추론을 수행하는 Inference module은 아래와 같이 Classifer와 DLR model로 구성됩니다. 여기서, Requester는 "local/inference" topic으로 추론을 요청하고, "local/result" topic으로 결과를 얻습니다. 
 
 
 <img src="https://user-images.githubusercontent.com/52392004/211015785-45565ad7-cf7e-4314-b2c8-7f3ee76acca7.png" width="800">
@@ -31,7 +31,7 @@ Edge에 있는 IoT 디바이스에서 이미지 분류를 수행하는 과정을
 
 Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 추론 개발하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dev/local)와 [Script를 이용해 Component를 설치하여 이미지 분류 추론 개발하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/dev/script)에서 상세하게 설명하고 있습니다. 
 
-이미비 분류를 수행하는 과정은 아래와 같습니다. 
+이미지 분류를 수행하는 과정은 아래와 같습니다. 
 
 1) Requester는 Greengrass의 local component로서 자신이 관리하는 이미지의 Path 및 파일명을 가지고 이미지 분류를 요청합니다. 
 
@@ -71,7 +71,7 @@ def publish_binary_message_to_topic(ipc_client, topic, message):
     ipc_client.publish_to_topic(topic=topic, publish_message=publish_message)
 ```    
 
-com.custom.ImageClassifier를 통해 추론을 수행한 결과는 "local/result" 토픽을 이용하여 아래처럼 확인합니다. 
+com.custom.ImageClassifier를 통해 추론을 수행한 결과는 "local/result" topic을 이용하여 아래처럼 확인합니다. 
 
 ```python
 _, operation = ipc_client.subscribe_to_topic(topic="local/result", on_stream_event=on_stream_event,
@@ -86,7 +86,7 @@ def on_stream_event(event: SubscriptionResponseMessage) -> None:
         traceback.print_exc()
 ```        
 
-[Pub/Sub IPC](https://docs.aws.amazon.com/greengrass/v2/developerguide/ipc-publish-subscribe.html)를 이용해 edge에 설치된 component들 끼리 메시지를 교환하기 위해서는 [recipe](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/recipes/com.custom.requester-1.0.0.json)을 아래와 같이 설정합니다. [aws.greengrass.ipc.pubsub](https://docs.aws.amazon.com/ko_kr/greengrass/v2/developerguide/ipc-publish-subscribe.html)은 디바이스의 local component들 사이에 메시지를 교환하기 위한 IPC 서비스 식별자입니다. 
+[Pub/Sub IPC](https://docs.aws.amazon.com/greengrass/v2/developerguide/ipc-publish-subscribe.html)를 이용해 edge에 설치된 component들 사이에 메시지를 교환하기 위해서는 [recipe](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/recipes/com.custom.requester-1.0.0.json)을 아래와 같이 설정합니다. [aws.greengrass.ipc.pubsub](https://docs.aws.amazon.com/ko_kr/greengrass/v2/developerguide/ipc-publish-subscribe.html)은 디바이스의 local component들 사이에 메시지를 교환하기 위한 IPC 서비스 식별자입니다. 
 
 ```java
 "ComponentConfiguration": {
