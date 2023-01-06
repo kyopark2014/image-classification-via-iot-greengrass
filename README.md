@@ -152,7 +152,7 @@ def classifier(data):
         return result['body'][0]['Label']
 ```
 
-[inference.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/inference.py)에서는 아래와 같이 기학습된 모델을 로딩하고 전달받은 이미지 데이터를 resize 한 후 추론을 수행합니다. 
+[inference.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/inference.py)에서는 기학습된 모델을 로딩하고 전달받은 이미지 데이터를 resize 한 후 추론을 수행합니다. 아래에서처럼 load_model()은 "variant.DLR.ImageClassification.ModelStore"로 DLM model을 로딩하고, handler()는 event을 받아서 body를 추출한후 모델에 맞는 크기로 변환합니다. 마지막으로 predict_from_image은 로딩한 모델로 추론을 수행하고 결과를 리턴합니다. 
 
 ```java
 SCORE_THRESHOLD = 0.3
@@ -192,7 +192,7 @@ def predict_from_image(model, image_data):
         return result
 ```
 
-[recipes](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/recipes/com.custom.ImageClassifer-1.0.0.json)에서는 libgl1을 비롯한 라이브러리를 설치합니다.
+[recipes](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/recipes/com.custom.ImageClassifer-1.0.0.json)와 같이 libgl1, opencv-python등과 같은 라이브러리를 설치하고, interface.py를 실행합니다. 
 
 ```java
 "Manifests": [{        
@@ -208,7 +208,7 @@ def predict_from_image(model, image_data):
 }
 ```
 
-또한, 추론을 위한 라이브러리에 의존성(dependency)가 있으므로 아래와 같이 "ComponentDependencies"에서 "variant.DLR.ImageClassification.ModelStore"를 기술하여야 합니다. 
+또한, DLM model을 가진 Built-in component를 설치하기 위하여, ComponentDependencies에 아래와 같이 "variant.DLR.ImageClassification.ModelStore"를 기술합니다. 
 
 ```java
       "ComponentDependencies": {
