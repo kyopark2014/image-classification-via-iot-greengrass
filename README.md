@@ -23,7 +23,7 @@ Public component인 aws.greengrass.DLRImageClassification을 이용하면, IoT �
 
 ## Custom Component를 이용한 이미지 분류 
 
-Edge에 있는 IoT 디바이스에서 이미지 분류를 수행하는 과정을 아래 Architecture에서 설명하고 있습니다. AWS Cloud의 Greengrass를 이용하여 디바이스에 Component를 배포하거나 관리할 수 있습니다. IoT 디바이스에는 이미지 분류를 요청하는 component인 Requester(com.custom.requester), 추론을 수행하는 component인 Classifier(com.custom.ImageClassifer), DLR model(variant.DLR.ImageClassification.ModelStore)이 있습니다. Requester와 Classifer는 [Nucleus](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html)를 통해 [IPC 통신](https://docs.aws.amazon.com/greengrass/v2/developerguide/interprocess-communication.html)을 수행합니다. 이미지 분류 추론을 수행하는 Inference module은 아래와 같이 Classifer와 DLR model로 구성됩니다. 여기서, Requester는 "local/inference" topic으로 추론을 요청하고, "local/result" topic으로 결과를 얻습니다. 
+Edge에 있는 IoT 디바이스에서 이미지 분류를 수행하는 과정을 아래 Architecture에서 설명하고 있습니다. AWS Cloud의 Greengrass를 이용하여 디바이스에 Component를 배포하거나 관리할 수 있습니다. IoT 디바이스에는 이미지 분류를 요청하는 component인 Requester(com.custom.requester), 추론을 수행하는 component인 Classifier(com.custom.ImageClassifier), DLR model(variant.DLR.ImageClassification.ModelStore)이 있습니다. Requester와 Classifier는 [Nucleus](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html)를 통해 [IPC 통신](https://docs.aws.amazon.com/greengrass/v2/developerguide/interprocess-communication.html)을 수행합니다. 이미지 분류 추론을 수행하는 Inference module은 아래와 같이 Classifier와 DLR model로 구성됩니다. 여기서, Requester는 "local/inference" topic으로 추론을 요청하고, "local/result" topic으로 결과를 얻습니다. 
 
 
 <img src="https://user-images.githubusercontent.com/52392004/211015785-45565ad7-cf7e-4314-b2c8-7f3ee76acca7.png" width="800">
@@ -51,7 +51,7 @@ Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 
 
 ### Requester (com.custom.requester)
 
-[com.custom.requester](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/artifacts/com.custom.requester/1.0.0/requester.py)은 [Greengrass IPC Client V2](https://github.com/aws/aws-iot-device-sdk-python-v2)를 이용해 아래와 같이 com.custom.ImageClassifer로 추론 요청을 수행합니다. 
+[com.custom.requester](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/artifacts/com.custom.requester/1.0.0/requester.py)은 [Greengrass IPC Client V2](https://github.com/aws/aws-iot-device-sdk-python-v2)를 이용해 아래와 같이 com.custom.ImageClassifier로 추론 요청을 수행합니다. 
 
 요청은 JSON 포맷으로된 메시지를 바이너리로 변환하여 publish 합니다. 
 ```python
@@ -192,7 +192,7 @@ def predict_from_image(model, image_data):
         return result
 ```
 
-[recipes](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/recipes/com.custom.ImageClassifer-1.0.0.json)와 같이 libgl1, opencv-python등과 같은 라이브러리를 설치하고, interface.py를 실행합니다. 
+[recipes](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/recipes/com.custom.ImageClassifier-1.0.0.json)와 같이 libgl1, opencv-python등과 같은 라이브러리를 설치하고, interface.py를 실행합니다. 
 
 ```java
 "Manifests": [{        
