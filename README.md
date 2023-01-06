@@ -35,7 +35,7 @@ Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 
 
 1) Requester는 Greengrass의 local component로서 자신이 관리하는 이미지의 Path 및 파일명을 가지고 이미지 분류를 요청합니다. 
 
-2) Nucleus는 local MQTT 역할을 하므로, "local/inference" topic으로 publish를 수행합니다. 
+2) Nucleus의 local MQTT 역할을 이용하여, Requester는 "local/inference" topic으로 publish를 수행합니다. 
 
 3) Classifier는 "local/inference"를 Subscribe하고 있다가, Requester가 보낸 이미지 분류 추론 요청을 받습니다.
 
