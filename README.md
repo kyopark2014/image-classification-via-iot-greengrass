@@ -219,9 +219,9 @@ def predict_from_image(model, image_data):
       }
 ```
 
-### CDK를 이용한 Component 배포 준비
+### AWS CDK를 이용한 Component 배포 준비
 
-CDK를 이용하여 Component를 배포합니다. 
+[AWS CDK](https://aws.amazon.com/ko/getting-started/guides/setup-cdk/)를 이용하여 Component를 배포합니다. 
 
 [cdk-greengrass-stack.ts](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/cdk-greengrass/lib/cdk-greengrass-stack.ts)에서는 s3 bucket을 생성하고, artifact를 복사한후 deployment를 이용해 배포합니다. 
 
