@@ -33,19 +33,19 @@ Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 
 
 이미비 분류를 수행하는 과정은 아래와 같습니다. 
 
-1) Requester는 이미지에 대한 Path 및 파일명을 가지고 추론을 요청합니다.
+1) Requester는 Greengrass의 local component로서 자신이 관리하는 이미지의 Path 및 파일명을 가지고 이미지 분류를 요청합니다. 
 
-2) Nucleus는 local MQTT 역할을 하므로, "local/inference" topic으로 publish를 수행할 수 있습니다.
+2) Nucleus는 local MQTT 역할을 하므로, "local/inference" topic으로 publish를 수행합니다. 
 
-3) Classifier는 "local/inference"를 Subscribe하고 있으므로 Requester가 보낸 요청을 받습니다.
+3) Classifier는 "local/inference"를 Subscribe하고 있다가, Requester가 보낸 이미지 분류 추론 요청을 받습니다.
 
-4) Classifier는 "DLR model"로 추론(inference)을 수행합니다. 
+4) Classifier는 DLR model로 추론(inference)을 수행합니다. 
 
-5) 수행결과는 Classifier를 얻습니다.
+5) 이미지 분류 수행 결과를 Classifier에 전달합니다. 
 
 6) Classifier는 "local/result" topic으로 결과를 전달합니다.
 
-7) Requester는 "local/result" topic에서 결과를 받아서 추론 동작을 완료합니다. 
+7) Requester는 "local/result" topic을 활용하여 이미지 분류 결과를 확인합니다. 
 
 
 
