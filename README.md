@@ -110,7 +110,7 @@ def on_stream_event(event: SubscriptionResponseMessage) -> None:
   }
   ```
 
-### "com.custom.ImageClassifier"
+### Classifier (com.custom.ImageClassifier)
 
 [interface.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/interface.py)에서는 "local/inference" 토픽으로 메시지를 받으면, classifier()로 요청합니다. 
 
