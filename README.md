@@ -5,7 +5,7 @@ IoT 디바이스에서 이미지 분류를 하기 위해서는 효과적인 머�
 
 ## Built-in Component를 이용한 이미지 분류 및 문제점
 
-Greengrass에서 Built-in으로 제공하는 public component인 [aws.greengrass.DLRImageClassification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)은 IoT 디바이스에서 이미지 분류를 할 수 있도록 해줍니다. aws.greengrass.DLRImageClassification을 설치하고, 활용하는 방법에 대한 상세한 설명은 [Built-in Component를 이용하여 IoT 디바이스에서 이미지 분류하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/README.md)를 참조합니다. 
+Greengrass에서 Built-in으로 제공하는 public component인 [aws.greengrass.DLRImageClassification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)은 IoT 디바이스에서 이미지 분류를 할 수 있도록 해줍니다. [Built-in Component를 이용하여 IoT 디바이스에서 이미지 분류하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/README.md)에서는 aws.greengrass.DLRImageClassification을 설치하고, 활용하는 방법에 대한 상세한 설명을 하고 있습니다. 
 
 Public component인 aws.greengrass.DLRImageClassification을 이용하면, IoT 디바이스에서 손쉽게 이미지 분류를 구현할 수 있습니다. 하지만, 아래와 같이 주기(InferenceInterval), 이미지 로드하는 폴더(ImageDirectory), 이미지 이름(ImageName)만 설정할 수 있으므로 사용자의 목적에 따라 자유롭게 수정할 수 없습니다. 
 
