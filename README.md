@@ -130,9 +130,7 @@ def on_stream_event(event: SubscriptionResponseMessage) -> None:
         if event_topic == topic:
             json_data = json.loads(message) # json decoding        
             result = classifier(json_data)       
-            logger.info("result: {}".format(result))
 
-            # return the result to the consumer        
             publish_binary_message_to_topic(ipc_client, "local/result",  result)            
 ```
 
@@ -165,7 +163,6 @@ MODEL_DIR = '/greengrass/v2/packages/artifacts-unarchived/variant.DLR.ImageClass
 
 def load_model(model_dir):
     model = DLRModel(model_dir, dev_type='cpu', use_default_dlr=False)
-    logger.debug('MODEL was loaded')
     return model
 
 model = load_model(MODEL_DIR)
