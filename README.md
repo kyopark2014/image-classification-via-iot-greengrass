@@ -55,7 +55,7 @@ Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 
 
 ["com.custom.requester"](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/artifacts/com.custom.requester/1.0.0/requester.py)은 [Greengrass IPC Client V2](https://github.com/aws/aws-iot-device-sdk-python-v2)를 이용해 아래와 같이 "com.custom.ImageClassifer"로 추론 요청을 수행합니다. 
 
-요청은 JSON 포맷으로된 메시지를 바이너리로 변환하여 
+요청은 JSON 포맷으로된 메시지를 바이너리로 변환하여 publish 합니다. 
 ```python
 from awsiot.greengrasscoreipc.clientv2 import GreengrassCoreIPCClientV2
 
