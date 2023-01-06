@@ -136,7 +136,7 @@ def on_stream_event(event: SubscriptionResponseMessage) -> None:
             publish_binary_message_to_topic(ipc_client, "local/result",  result)            
 ```
 
-[classifier.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/classifier.py)는 아래와 같이 이미지를 로드하여 실제 추론을 수행하는 ["inference"](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/interface.py)의 handler를 호출하고 결과가 오면, 가장 확률이 높은 결과를 리턴합니다. 
+[classifier.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/classifier.py)는 아래와 같이 이미지를 로드하여 실제 추론을 수행하는 ["inference"](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/interface.py)의 handler()를 호출하고 결과가 오면, 가장 확률이 높은 결과를 리턴합니다. 
 
 ```python
 from inference import handler  
@@ -150,7 +150,6 @@ def classifier(data):
 
     try:
         result = handler(event,"")          
-        logger.debug("result: %s", result['body'][0]['Label'])
         
         return result['body'][0]['Label']
 ```
