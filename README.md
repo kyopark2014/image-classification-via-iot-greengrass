@@ -51,7 +51,7 @@ Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 
 
 ### Requester (com.custom.requester)
 
-["com.custom.requester"](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/artifacts/com.custom.requester/1.0.0/requester.py)은 [Greengrass IPC Client V2](https://github.com/aws/aws-iot-device-sdk-python-v2)를 이용해 아래와 같이 "com.custom.ImageClassifer"로 추론 요청을 수행합니다. 
+[com.custom.requester](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/artifacts/com.custom.requester/1.0.0/requester.py)은 [Greengrass IPC Client V2](https://github.com/aws/aws-iot-device-sdk-python-v2)를 이용해 아래와 같이 "com.custom.ImageClassifer"로 추론 요청을 수행합니다. 
 
 요청은 JSON 포맷으로된 메시지를 바이너리로 변환하여 publish 합니다. 
 ```python
@@ -86,7 +86,7 @@ def on_stream_event(event: SubscriptionResponseMessage) -> None:
         traceback.print_exc()
 ```        
 
-[Pub/Sub IPC](https://docs.aws.amazon.com/greengrass/v2/developerguide/ipc-publish-subscribe.html)를 이용해 edge에 설치된 component들 끼리 메시지를 교환하기 위해서는 [recipe](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/recipes/com.custom.requester-1.0.0.json)을 아래와 같이 설정합니다. 
+[Pub/Sub IPC](https://docs.aws.amazon.com/greengrass/v2/developerguide/ipc-publish-subscribe.html)를 이용해 edge에 설치된 component들 끼리 메시지를 교환하기 위해서는 [recipe](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/recipes/com.custom.requester-1.0.0.json)을 아래와 같이 설정합니다. [aws.greengrass.ipc.pubsub](https://docs.aws.amazon.com/ko_kr/greengrass/v2/developerguide/ipc-publish-subscribe.html)은 디바이스안의 local component간에 메시지를 교환을 위한 IPC 서비스 식별자입니다. 
 
 ```java
 "ComponentConfiguration": {
