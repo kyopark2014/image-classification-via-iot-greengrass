@@ -258,7 +258,7 @@ new greengrassv2.CfnDeployment(this, 'MyCfnDeployment', {
 
 ### 배포하기 
 
-[[CDK로 Cloud9에서 이미지 분류 추론하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/src])에서는 DLR model을 이용하여 Component에서 추론(Inference)를 수행하는것을 설명합니다. 
+[[CDK로 Cloud9에서 이미지 분류 추론하기]](https://github.com/kyopark2014/image-classification-via-iot-greengrass/tree/main/src)에서는 DLR model을 이용하여 Component에서 추론(Inference)를 수행하는것을 설명합니다. 
 
 
 ### Greengrass Commands와 Memo
