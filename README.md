@@ -152,7 +152,7 @@ def classifier(data):
         return result['body'][0]['Label']
 ```
 
-[inference.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/inference.py)에서는 기학습된 모델을 로딩하고 전달받은 이미지 데이터를 resize 한 후 추론을 수행합니다. 아래에서처럼 load_model()은 "variant.DLR.ImageClassification.ModelStore"로 DLM model을 로딩하고, handler()는 event을 받아서 body를 추출한후 모델에 맞는 크기로 변환합니다. 마지막으로 predict_from_image은 로딩한 모델로 추론을 수행하고 결과를 리턴합니다. 
+[inference.py](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/classifier/artifacts/com.custom.ImageClassifier/1.0.0/inference.py)에서는 기학습된 모델을 로딩하고 전달받은 이미지 데이터를 resize 한 후 추론을 수행합니다. 아래에서처럼 load_model()은 "variant.DLR.ImageClassification.ModelStore"로 DLR model을 로딩하고, handler()는 event을 받아서 body를 추출한후 모델에 맞는 크기로 변환합니다. 마지막으로 predict_from_image은 로딩한 모델로 추론을 수행하고 결과를 리턴합니다. 
 
 ```java
 SCORE_THRESHOLD = 0.3
@@ -208,7 +208,7 @@ def predict_from_image(model, image_data):
 }
 ```
 
-또한, DLM model을 가진 Built-in component를 설치하기 위하여, ComponentDependencies에 아래와 같이 "variant.DLR.ImageClassification.ModelStore"를 기술합니다. 
+또한, DLR model을 가진 Built-in component를 설치하기 위하여, ComponentDependencies에 아래와 같이 "variant.DLR.ImageClassification.ModelStore"를 기술합니다. 
 
 ```java
       "ComponentDependencies": {
