@@ -1,0 +1,44 @@
+{
+  "RecipeFormatVersion": "2020-01-25",
+  "ComponentName": "com.custom.ImageClassifier",
+  "ComponentVersion": "1.0.0",
+  "ComponentDescription": "A component that subscribe a topic from requester.",
+  "ComponentPublisher": "Amazon",
+  "ComponentConfiguration": {
+    "DefaultConfiguration": {
+      "accessControl": {
+        "aws.greengrass.ipc.pubsub": {
+          "com.custom.ImageClassifier:pubsub:1": {
+            "policyDescription": "Allows access to publish/subscribe to the topics.",
+            "operations": [
+              "aws.greengrass#PublishToTopic",
+              "aws.greengrass#SubscribeToTopic"                  
+            ],
+            "resources": [
+              "local/inference",
+              "local/result"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "ComponentDependencies": {
+      "variant.DLR.ImageClassification.ModelStore": {
+        "VersionRequirement": ">=2.1.0 <2.2.0",
+        "DependencyType": "HARD"
+      }
+  },
+  "Manifests": [{        
+    "Lifecycle": {
+      "Install": {
+        "RequiresPrivilege": "true",
+        "Script": "apt-get install libgl1 -y\n pip3 install --upgrade pip \n pip3 install scikit-build wheel opencv-python==4.6.0.66 dlr\n python -m pip install dlr\n pip3 install awsiotsdk"
+      },
+      "Run": {
+        "RequiresPrivilege": "true",
+        "Script": "python3 -u {artifacts:path}/interface.py"
+      }
+    }
+  }]
+}
