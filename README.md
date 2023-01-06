@@ -7,7 +7,8 @@ IoT 디바이스에서 이미지 분류를 위한 머신러닝을 활용하기 �
 
 [aws.greengrass.DLRImageClassification](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-component.html)은 AWS에서 Built-in으로 제공하는 public component로서 [DLR (Deep Learning Runtime)](https://github.com/neo-ai/neo-ai-dlr)을 이용하여 IoT 디바이스에서 이미지 분류를 할 수 있도록 해줍니다. aws.greengrass.DLRImageClassification을 설치하고, 활용하는 방법에 대한 상세한 설명은 [Built-in Component를 이용하여 IoT 디바이스에서 이미지 분류하기](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/README.md)를 참조합니다. 
 
-Public componentaws.greengrass.DLRImageClassification을 이용하면 IoT 디바이스에서 손쉽게 이미지 분류를 구현할 수 있지만, 로 제공하는 aws.greengrass.DLRImageClassification는 사용자의 목적에 따라 수정이 어렵고 아래와 같이 일부 항목에 대해서만 설정이 가능합니다. 특히, RESTful API처럼 Greengrass의 다른 Component에서 aws.greengrass.DLRImageClassification에 요청을 보내는 방식이 아니라 일정 주기(InferenceInterval)로 특정 폴더(ImageDirectory)에 특정 이름(ImageName)을 가진 파일을 복사하는 방식입니다.
+Public component인 aws.greengrass.DLRImageClassification을 이용하면, IoT 디바이스에서 손쉽게 이미지 분류를 구현할 수 있습니다. 하지만, 아래와 같이 주기(InferenceInterval), 이미지 로드하는 폴더(ImageDirectory), 이미지 이름(ImageName)만 설정할 수 있으므로 사용자의 목적에 따라 자유롭게 수정할 수 없습니다. 
+
 
 ```java
 {
@@ -17,7 +18,10 @@ Public componentaws.greengrass.DLRImageClassification을 이용하면 IoT 디바
 }
 ```
 
-따라서, DLR model(aws.greengrass.DLRImageClassification)로 이미지 분류를 수행하는 comstom component가 필요합니다. 이와 같이 [IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 DLR model을 이용하여, IoT 디바이스에서 이미지 분류(Image Classification)를 쉽고 편리하게 이용하고자 합니다. 
+또한, RESTful API처럼 Greengrass의 다른 Component에서 aws.greengrass.DLRImageClassification에 직접 요청을 보내고 결과를 얻는 방식이 아니라, IoT Core를 통해 결과를 확인할 수 있습니다. 따라서, IoT 디바이스 만으로 로컬 컴포넌트에서 이미지 분류를 구현하고자 한다면 Custom Component에서 직접 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)의 DLR model을 활용할 수 있어야 합니다. 
+
+
+아래에서는 [IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 DLR model을 이용하여, IoT 디바이스에서 이미지 분류(Image Classification)를 쉽고 편리하게 이용하고자 합니다. 
 
 
 ## Custom Component를 이용한 이미지 분류 
