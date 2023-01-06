@@ -49,7 +49,7 @@ Custom component를 개발하는 과정은 [Local 환경에서 이미지 분류 
 
 
 
-### "com.custom.requester"
+### Requester (com.custom.requester)
 
 ["com.custom.requester"](https://github.com/kyopark2014/image-classification-via-iot-greengrass/blob/main/src/requester/artifacts/com.custom.requester/1.0.0/requester.py)은 [Greengrass IPC Client V2](https://github.com/aws/aws-iot-device-sdk-python-v2)를 이용해 아래와 같이 "com.custom.ImageClassifer"로 추론 요청을 수행합니다. 
 
@@ -71,7 +71,7 @@ def publish_binary_message_to_topic(ipc_client, topic, message):
     ipc_client.publish_to_topic(topic=topic, publish_message=publish_message)
 ```    
 
-추론의 결과는 토픽명이 "local/result"으로 아래처럼 전달 받습니다. 
+com.custom.ImageClassifier를 통해 추론을 수행한 결과는 "local/result" 토픽을 이용하여 아래처럼 확인합니다. 
 
 ```python
 _, operation = ipc_client.subscribe_to_topic(topic="local/result", on_stream_event=on_stream_event,
