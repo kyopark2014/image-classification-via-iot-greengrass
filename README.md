@@ -18,7 +18,7 @@ Public component인 aws.greengrass.DLRImageClassification을 이용하면, IoT �
 }
 ```
 
-또한, RESTful API처럼 Greengrass의 다른 Component에서 aws.greengrass.DLRImageClassification에 직접 요청을 보내고 결과를 얻는 방식이 아니라, IoT Core를 통해 결과를 확인할 수 있습니다. 따라서, IoT 디바이스 만으로 로컬 컴포넌트에서 이미지 분류를 구현하고자 한다면 Custom Component에서 직접 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)의 DLR model을 활용할 수 있어야 합니다. 
+또한, RESTful API처럼 Greengrass의 다른 Component에서 aws.greengrass.DLRImageClassification에 직접 요청을 보내고 결과를 얻는 방식이 아니라, IoT Core를 통해 결과를 확인하여야 합니다. 따라서, IoT 디바이스 만으로 로컬 컴포넌트에서 이미지 분류를 구현하고자 한다면 Custom Component에서 직접 [variant.DLR.ImageClassification.ModelStore](https://docs.aws.amazon.com/greengrass/v2/developerguide/dlr-image-classification-model-store-component.html)의 DLR model을 활용할 수 있어야 합니다. 
 
 
 아래에서는 [IoT Greengrass](https://github.com/kyopark2014/iot-greengrass)의 DLR model을 이용하여, IoT 디바이스에서 이미지 분류(Image Classification)를 쉽고 편리하게 이용하고자 합니다. 
