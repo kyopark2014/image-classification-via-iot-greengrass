@@ -4,7 +4,138 @@
 
 Cloud9은 브라우저만으로 코드를 작성, 실행 및 디버깅할 수 있는 클라우드 기반 IDE(통합 개발 환경)로서 Greengrass 디바이스 동작을 테스트하기에 유용합니다.
 
-### 1) Cloud9 생성
+## 1) Greengrass 사용을 위한 IAM Role 및 Policy 설정
+
+Greegrass를 처음 설치하는 경우에 아래와 같이 IAM Role과 Policy를 설정하여야 합니다. 이미 Greengrass를 사용중이라면 단계2로 이동합니다. 
+[Authorize core devices to interact with AWS services](https://docs.aws.amazon.com/greengrass/v2/developerguide/device-service-role.html)을 따라 [IAM Console의 Policy](https://us-east-1.console.aws.amazon.com/iamv2/home?region=ap-northeast-2#/policies)에서 [Create policy]를 선택한 후에 JSON Tab에서 아래의 policy를 입력하여,   “GreengrassV2TokenExchangeRoleAccess” 이름을 가지는 Policy를 생성합니다. 
+
+```java
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "logs:DescribeLogStreams",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+마찬가지로 S3로 부터 artifact를 가져올 수 있도록 S3에 대한 접근권한을 가지는 “GGv2WorkshopS3Policy” Policy를 아래와 같이 생성합니다. 
+
+```java
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": "arn:aws:s3:::*"
+    }
+  ]
+}
+```
+
+[IAM Console의 Roles](https://us-east-1.console.aws.amazon.com/iamv2/home?region=ap-northeast-2#/roles)에서 [Create role]을 선택하여 “GreengrassV2TokenExchangeRole” 이름을 가지는 Role을 생성합니다. 이때, “trusted entities”은 아래와 같이 설정합니다. 
+
+```java
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "credentials.iot.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+```
+
+이후, “GreengrassV2TokenExchangeRole”을 찾아서, [Add permissions]으로 “GGv2WorkshopS3Policy”과 “GreengrassV2TokenExchangeRoleAccess”을 추가합니다. 
+디바이스에서 Greengrass를 Provisioning하기 위하여, [Minimal IAM policy for installer to provision resources](https://docs.aws.amazon.com/greengrass/v2/developerguide/provision-minimal-iam-policy.html)에 따른 Policy를 account에 추가하여야 합니다. 여기서는 "aws-policy-greengrass" 이름의 Policy를 생성하려고 합니다. 
+먼저, Policy 생성에 필요한, account-id 정보를 AWS Console화면에서 확인하거나, 아래 명령어로 확인합니다.
+
+```java
+aws sts get-caller-identity --query Account --output text
+```
+
+[IAM Console의 Policies](https://us-east-1.console.aws.amazon.com/iamv2/home#/policies)로 접속하여 [Create Policy]를 선택한 후 JSON 탭에서 아래와 같은 Policy를 생성합니다. 이때, 아래의 “account-id”에는 12자리 account번호를 입력합니다. 
+
+```java
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "CreateTokenExchangeRole",
+            "Effect": "Allow",
+            "Action": [
+                "iam:AttachRolePolicy",
+                "iam:CreatePolicy",
+                "iam:CreateRole",
+                "iam:GetPolicy",
+                "iam:GetRole",
+                "iam:PassRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::account-id:role/GreengrassV2TokenExchangeRole",
+                "arn:aws:iam::account-id:policy/GreengrassV2TokenExchangeRoleAccess"
+            ]
+        },
+        {
+            "Sid": "CreateIoTResources",
+            "Effect": "Allow",
+            "Action": [
+                "iot:AddThingToThingGroup",
+                "iot:AttachPolicy",
+                "iot:AttachThingPrincipal",
+                "iot:CreateKeysAndCertificate",
+                "iot:CreatePolicy",
+                "iot:CreateRoleAlias",
+                "iot:CreateThing",
+                "iot:CreateThingGroup",
+                "iot:DescribeEndpoint",
+                "iot:DescribeRoleAlias",
+                "iot:DescribeThingGroup",
+                "iot:GetPolicy"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "DeployDevTools",
+            "Effect": "Allow",
+            "Action": [
+                "greengrass:CreateDeployment",
+                "iot:CancelJob",
+                "iot:CreateJob",
+                "iot:DeleteThingShadow",
+                "iot:DescribeJob",
+                "iot:DescribeThing",
+                "iot:DescribeThingGroup",
+                "iot:GetThingShadow",
+                "iot:UpdateJob",
+                "iot:UpdateThingShadow"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+"aws-policy-greengrass" policy가 생성되면, [IAM Console의 Users](https://us-east-1.console.aws.amazon.com/iamv2/home#/users)에서 현재 User에 "aws-policy-greengrass" policy를 [Add permissions]로 추가합니다.
+
+
+## 2) Cloud9 생성
 
 [Cloud9 Console](https://ap-northeast-2.console.aws.amazon.com/cloud9control/home?region=ap-northeast-2#/create)에서 아래와 같이 [Name]을 입력합니다.
 
@@ -19,7 +150,7 @@ Platform은 "Ubuntu Server 18.04 LTS"을 선택합니다.
 
 
 
-## 2) Greengrass 설치하기 
+## 3) Greengrass 설치하기 
 
 Cloud9을 오픈하고 터미널을 실행합니다.
 
