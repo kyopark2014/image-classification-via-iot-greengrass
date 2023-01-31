@@ -186,7 +186,7 @@ sudo -E java -Droot="/greengrass/v2" -Dlog.store=FILE -jar ./GreengrassCore/lib/
 
 필요시 [EBS 크기 변경](https://github.com/kyopark2014/technical-summary/blob/main/resize.md)에 따라 EBS 크기를 확대합니다. 다수의 Docker 이미지 빌드시 Cloud9의 기본 사용용량이 부족할 수 있습니다. 
 
-## 3) CDK Deployment
+## 4) CDK Deployment
 
 여기에서는 CDK를 이용해 머신러닝 알고리즘 추론을 IoT Greengrass에 배포하는 방법에 대해 설명합니다. 
 
@@ -203,6 +203,18 @@ cdk 폴더로 이동하여 필요한 라이브러리를 설치합니다. "aws-cd
 ```java
 cd image-classification-via-iot-greengrass/cdk-greengrass/
 npm install aws-cdk-lib
+```
+
+CDK를 처음 사용하는 경우에는 아래와 같이 bootstrap을 실행하여야 합니다. 
+
+```c
+cdk bootstrap aws://123456789012/ap-northeast-2
+```
+
+여기서 '123456789012'은 Account Number를 의미합니다. 또한 Account Number는 아래 명령어로 확인할 수 있습니다.
+
+```c
+aws sts get-caller-identity --query Account --output text
 ```
 
 
