@@ -190,9 +190,7 @@ sudo -E java -Droot="/greengrass/v2" -Dlog.store=FILE -jar ./GreengrassCore/lib/
 
 여기에서는 CDK를 이용해 머신러닝 알고리즘 추론을 IoT Greengrass에 배포하는 방법에 대해 설명합니다. 
 
-### Github Code를 활용하는 경우
-
-아래와 같이 github의 코드를 다운로드 합니다. 
+먼저, 아래와 같이 github의 코드를 다운로드 합니다. 
 
 ```java
 git clone https://github.com/kyopark2014/image-classification-via-iot-greengrass
